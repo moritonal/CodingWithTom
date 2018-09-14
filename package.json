@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/Glitch0011/CodingWithTom/issues"
   },
+  "alias": {
+    "vue$": "vue/dist/vue.js"
+  },
   "homepage": "https://github.com/Glitch0011/CodingWithTom#readme"
 }

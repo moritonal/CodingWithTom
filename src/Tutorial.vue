@@ -1,31 +1,56 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+      <div v-if="this.markdown != null">
+          <component :is="jsonMarkdown"></component>
+      </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+
+import marked from "marked"
+import Vue from 'vue/dist/vue.js';
+
+import Answer from "./Answer.vue"
+import StretchGoal from "./StretchGoal.vue"
+
 export default {
   name: "Tutorial",
   data() {
     return {
-      msg: "Loading Data",
-      markdownUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom/master/data.mk"
+        
     };
   },
-  mounted: async function() {
-      this.msg = "Loading";
+  components: {
+      Answer
+  },
+  props: ["markdown"],
+  mounted: async function() {},
+  computed: {
+    jsonMarkdown: function() {
 
-      let request = await fetch(this.markdownUrl);
-      let response = await request.text();
+        // Here I think it'd be best to convert the markdown into json, then work with it.
+        // Although there a small argument that markdown isn't the correct format in the first place.
+        let compiledMardown = marked(this.markdown);
 
-      this.msg = "Loaded";
+        let component = Vue.compile(`<div>${compiledMardown}</div>`);
+
+        component.components = {
+            Answer,
+            StretchGoal
+        };
+
+        return component;
+    }
   }
 };
+
 </script>
 
 <style lang="css">
+
 #app {
-  color: #56b983;
+
 }
+
 </style>
