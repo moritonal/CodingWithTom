@@ -1,0 +1,224 @@
+If you see text such as `index.html:45`, it's referring to the file `index.html` and line `45`. `index.ts:DoSomething()` refer's to the file `index.html` and function `DoSomething()`. Most objectives are written to be easily Googled into a solution.
+
+# Install the IDE, and start a blank project
+
+Integrated Development Environments are programs that make programs.
+
+#### Install Visual Studio Code
+
+Visual Studio Code is a new IDE produced by Microsoft to act as a light-weight alternative to Visual Studio.
+
+<Answer>
+
+* Visit https://code.visualstudio.com/ and click "Download for Windows"
+* Once the file has downloaded, install it, accepting all defaults.
+
+</Answer>
+
+#### Open VS-Code
+
+<Answer>
+
+* Use Windows Search to look for "Visual Studio Code", then open it.
+
+</Answer>
+
+#### Open an empty folder
+
+<Answer>
+
+* Click "Open folder..."
+* Create a directory
+* Open it
+
+</Answer>
+
+#### Open VS-Code's in-built Terminal
+
+<Answer>
+
+* In the menu at the top, click View, then select Terminal.
+
+</Answer>
+
+# Setup the build pipeline
+
+#### Install ParcelJs via NPM
+
+<Answer>
+
+* Run `npm install -g parcel-bundler` in the Terminal
+
+</Answer>
+
+#### Initialise npm project
+
+<Answer>
+
+* Run `npm init -y` in the Terminal
+
+</Answer>
+
+#### Create new file called `index.ts`
+
+<Answer>
+
+* Right click on the left-hand panel and select "New File"
+* Type `index.ts`
+
+</Answer>
+
+#### Create new file called `index.html`
+
+<Answer>
+
+* Right click on the left-hand panel and select "New File"
+* Type `index.html`
+
+</Answer>
+
+#### Setup starting code in `index.html`
+
+Type into `index.html`
+
+````html
+<html>
+    <body>
+        <script src="./index.ts"></script>
+    </body>
+</html>
+````
+
+#### Run ParcelJs
+
+* Run `parcel ./index.html` in the Terminal
+
+#### Open the site in a browser
+
+<Answer>
+
+* Go to the site http://localhost:1234 in your favourite browser.
+* The number after "localhost" might be different, depending on the text in the Terminal.
+
+</Answer>
+
+# Output some text
+
+#### Write "Hello, World!" to the Browser
+
+After `index.html:3` enter on a new line `Hello, World!` and save. Then confirm that the text appears in the Browser.
+
+```html
+<html>
+    <body>
+        <script src="./index.ts"></script>
+        Hello, World!
+    </body>
+</html>
+```
+
+#### Open the Browser Console
+
+<Answer>
+
+* Type `Ctrl-Shift-I` with the Browser in focus.
+
+</Answer>
+
+#### Output "Hello, World!" to the console
+ 
+Hint: The command `console.log` is used to otuput to the Console.
+
+<Answer>
+
+* Write `console.log("Hello, World!")` into `index.ts:0`
+
+</Answer>
+
+# Create some inputs
+
+Inputs do things with user-input.
+
+#### Add an input box
+
+Add a single `input` element, with a `type` of `text` and an `id` of `MyLatitudeInput`
+
+<Answer>
+
+Write the line `<input type="text" id="MyLatitudeInput"/>` into `index.html` before the `<script>` tag.
+
+```html
+<html>
+    <body>
+        <input type="text" id="MyLatitudeInput" />
+        <script src="./index.ts"></script>
+    </body>
+</html>
+```
+
+</Answer>
+
+#### Add a button
+
+Add a single `input` element, with a `type` of `button` and an `id` of `MySubmitButton`
+
+<Answer>
+ 
+Write `<input type="button" id="MySubmitButton" value="Do something" />` into `index.html` before the `<script>` tag.
+
+```html
+<html>
+    <body>
+        <input type="text" id="MyLatitudeInput" />
+        <input type="button" id="MySubmitButton" value="Do something" />
+        <script src="./index.ts"></script>
+    </body>
+</html>
+```
+
+</Answer>
+
+# Write a function
+
+Function's are blocks of code that can be called multiple times. Replace all of `index.ts` with the following:
+
+```typescript
+// Define a function called Add
+function DoSomething() {
+    
+    // When called, write to console
+    console.log("Hello, World!")
+}
+
+// Call the function
+DoSomething();
+```
+
+# Call a function when a button's clicked
+
+Add the following line to the end of `index.ts`. This isn't the recommended way of doing it if you Google it, so extra points if someone can tell me why this is bad, and why we're doing it here.
+
+```typescript
+document.getElementById("MySubmitButton").onclick = DoSomething;
+```
+
+Now, when you click the button, you'll see "Hello, World!" outputted to the console.
+
+# Write the content of `MyLatitudeInput` to console on button-click
+
+Get the value of the text input field using JavaScript, and output it when you click the button.
+
+<Answer>
+
+Replace the inside of `index.ts:DoSomething()` with 
+```
+console.log(document.getElementById("MyLatitudeInput").value);
+```
+
+</Answer>
+
+You'll likely encounter an error here where you're told `Property 'value' does not exist on type 'HTMLElement'`. Feel free to either solve this, or consider fixing this bug to be the first <StretchGoal>StretchGoal</StretchGoal>
+
+# Wrap the value of `MyLatitudeInput` into an object
+
+Objects are how you can store structured data when coding.

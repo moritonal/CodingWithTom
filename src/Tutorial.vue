@@ -1,18 +1,25 @@
 <template>
   <div id="app">
       <div v-if="this.markdown != null">
-          <component :is="jsonMarkdown"></component>
+
+            <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
+
+            <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title">
+                <TutorialSection v-bind="objective"></TutorialSection>
+            </div>
       </div>
   </div>
 </template>
 
 <script lang="ts">
 
-import marked from "marked"
 import Vue from 'vue/dist/vue.js';
+import MarkdownLexor from "./MarkdownLexor"
 
 import Answer from "./Answer.vue"
 import StretchGoal from "./StretchGoal.vue"
+import TutorialSection from "./TutorialSection.vue"
+import TutorialSummary from "./TutorialSummary.vue"
 
 export default {
   name: "Tutorial",
@@ -21,26 +28,16 @@ export default {
         
     };
   },
-  components: {
-      Answer
-  },
   props: ["markdown"],
+  components:{
+      TutorialSection,
+      TutorialSummary
+  },
   mounted: async function() {},
   computed: {
-    jsonMarkdown: function() {
-
-        // Here I think it'd be best to convert the markdown into json, then work with it.
-        // Although there a small argument that markdown isn't the correct format in the first place.
-        let compiledMardown = marked(this.markdown);
-
-        let component = Vue.compile(`<div>${compiledMardown}</div>`);
-
-        component.components = {
-            Answer,
-            StretchGoal
-        };
-
-        return component;
+    jsonObject: function() {
+        
+        return MarkdownLexor.Parse(this.markdown);
     }
   }
 };
@@ -50,7 +47,17 @@ export default {
 <style lang="css">
 
 #app {
+    margin: 0px;
+    padding: 20px;
 
+    font-size: 110%;
+    font-weight: 400;
+    font-family: "Segoe UI",Arial,sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: antiquewhite;
 }
 
 </style>

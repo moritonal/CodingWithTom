@@ -33,7 +33,7 @@ export default {
 <style lang="css">
 
 div {
-  transition: filter 1s;
+  transition: filter 500ms;
 }
 
 .blur {
