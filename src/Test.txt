@@ -210,8 +210,9 @@ Get the value of the text input field using JavaScript, and output it when you c
 
 <Answer>
 
-Replace the inside of `index.ts:DoSomething()` with 
-```
+Replace the inside of `index.ts:DoSomething()` with
+
+```typescript
 console.log(document.getElementById("MyLatitudeInput").value);
 ```
 

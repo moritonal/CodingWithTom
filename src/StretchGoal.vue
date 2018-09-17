@@ -26,8 +26,4 @@ export default {
 
 <style lang="css">
 
-#app {
-
-}
-
 </style>

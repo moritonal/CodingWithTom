@@ -75,10 +75,11 @@ export default class MarkdownLexor {
 
         let renderer = new marked.Renderer();
 
-        renderer.code = (text, level) => {
+        renderer.code = (text, language) => {
+
             var escapedText = this.escapeHtml(text);
 
-            return `<MonicoCode>${escapedText}</MonicoCode>`;
+            return `<MonicoCode language='${language}'>${escapedText}</MonicoCode>`;
         };
 
         let summary = obj.start != null ? marked.parser(obj.start, {
