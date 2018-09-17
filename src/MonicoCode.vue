@@ -21,25 +21,21 @@ div {
   transition: filter 500ms;
 }
 
-.blur {
-  filter: blur(6px);
-  user-select: none;
-  -moz-user-select: none;
-  cursor: pointer;
-}
-
 #app {
 
 }
 
 
 #editor {
-  width: 500px;
-  height: 300px;
+  width: 100%;
+  height: 10px;
 }
 
 .vs-dark {
   background-color: #1e1e1e;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 </style>

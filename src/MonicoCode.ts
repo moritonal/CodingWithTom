@@ -52,6 +52,8 @@ import 'monaco-editor/esm/vs/language/html/monaco.contribution';
 import 'monaco-editor/esm/vs/basic-languages/html/html.contribution.js';
 import 'monaco-editor/esm/vs/basic-languages/typescript/typescript.contribution.js';
 
+import * as monaco from "monaco-editor"
+
 self.MonacoEnvironment = {
 	getWorker: function (moduleId, label) {
 		if (label === 'json') {
@@ -69,12 +71,16 @@ self.MonacoEnvironment = {
 			return new Worker(path);
 		}
 		if (label === 'typescript' || label === 'javascript') {
-            let path = './ts.worker.js';
+            let path = './typescript.worker.js';
 			return new Worker(path)
         }
         let path = './editor.worker.js';
 		return new Worker(path)
 	}
+}
+
+interface IData {
+    editor : monaco.editor.IStandaloneCodeEditor
 }
 
 export default {
@@ -90,9 +96,9 @@ export default {
     },
     options: Object
   },
-  data: function() {
-    return  {
-      editor: null 
+  data: function() : IData {
+    return <IData>{
+      editor: null
     }
   },
   model: {
@@ -115,7 +121,7 @@ export default {
   mounted() {
 
     this.value = this.$refs.code.innerText;
-    this.initMonaco(monaco)
+    this.initMonaco()
   },
 
   beforeDestroy() {
@@ -123,17 +129,31 @@ export default {
   },
 
   methods: {
-    initMonaco(monaco) {
+    initMonaco() {
 
       let element = this.$refs.editor;
 
-      console.log("Creating editor", this.language);
+      console.log("Creating editor for", this.language);
 
       this.editor = monaco.editor.create(element, {
         value: this.value,
         language: this.language,
-        theme: 'vs-dark'
+        theme: 'vs-dark',
+        readOnly: true,
+        automaticLayout: false,
+        scrollBeyondLastLine: false,
+        scrollbar: {
+            vertical: "hidden"
+        } as monaco.editor.IEditorScrollbarOptions
       });
+
+      let lines = this.editor.getModel().getLineCount() + 2;
+
+      const contentHeight = lines * 19;
+
+      element.style.height = contentHeight;
+
+      this.editor.layout();
     },
 
     getMonaco() {
