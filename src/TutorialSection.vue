@@ -4,12 +4,10 @@
             <span v-html="summary"></span>
         </h4>
         <div class="card-body">
-            <p class="card-text">
                 <div v-for="objective in this.objectives" v-bind:key="objective.summary">
                     <TutorialSubSection v-bind="objective" />
                 </div>
                 <component :is="textAsVue"></component>
-            </p>
         </div>
   </div>
 </template>

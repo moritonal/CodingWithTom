@@ -12,12 +12,14 @@
 import assign from 'nano-assign'
 import * as monaco from 'monaco-editor'
 
-// import MonacoEditor from './CustomMonacoEditor.js'
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.component(MonacoEditor.name, MonacoEditor);
+}
 
 export default {
   name: "MonicoCode",
   props: {
-    value: String,
+    /*value: String,*/
     theme: {
       type: String,
       default: 'vs-dark'
@@ -36,6 +38,7 @@ export default {
       default: window.require
     }
   },
+
   model: {
     event: 'change'
   },
@@ -49,13 +52,13 @@ export default {
       }
     },
 
-    value(newValue) {
+    /*value(newValue) {
       if (this.editor) {
         if (newValue !== this.editor.getValue()) {
           this.editor.setValue(newValue)
         }
       }
-    },
+    }*/,
 
     language(newVal) {
       if (this.editor) {
@@ -102,8 +105,6 @@ export default {
       let element = this.$refs.editor;
 
       this.editor = monaco.editor.create(element, options);
-      
-      console.log(this.$slots.defualt);
     },
 
     getMonaco() {
