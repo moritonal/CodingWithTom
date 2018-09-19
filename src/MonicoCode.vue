@@ -1,9 +1,11 @@
 <template>
-  <div class="vs-dark">
+  <div class="parent">
+  <div ref="editor_container" class="vs-dark">
     <div id="editor" ref="editor"></div>
     <div v-show="false" ref="code">
       <slot/>
     </div>
+  </div>
   </div>
 </template>
 
@@ -25,6 +27,12 @@ div {
 
 }
 
+.parent {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  background-color: #1e1e1e;
+}
 
 #editor {
   width: 100%;
@@ -33,9 +41,6 @@ div {
 
 .vs-dark {
   background-color: #1e1e1e;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 30px;
 }
 
 </style>

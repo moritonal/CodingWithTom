@@ -1,5 +1,6 @@
 import marked from "marked"
 import { first, rest, chain } from "underscore"
+import matchAll from "match-all"
 
 class GroupedMarkdownLex {
     start : marked.TokensList;
@@ -63,23 +64,36 @@ export default class MarkdownLexor {
         return groups;
     }
 
-    static escapeHtml(html){
+    static escapeHtml(html : string) {
         var text = document.createTextNode(html);
         var p = document.createElement('p');
+        
         p.appendChild(text);
+
         return p.innerHTML;
-      }
-      
+    }
 
     static GroupsToObj(obj : GroupedMarkdownLex) {
 
         let renderer = new marked.Renderer();
 
-        renderer.code = (text, language) => {
+        renderer.code = (text : string, language : string) => {
 
-            var escapedText = this.escapeHtml(text);
+            // Diff
+            if (/`{3}vs/.test(text)) {
 
-            return `<MonicoCode language='${language}'>${escapedText}</MonicoCode>`;
+                let left = matchAll(text, /([\s|\S]*)\n```vs/gi).toArray()[0];
+                let right = matchAll(text, /```vs\n([\s|\S]*)/gi).toArray()[0];
+
+                var escapedTextLeft = this.escapeHtml(left);
+                var escapedTextRight = this.escapeHtml(right);
+
+                return `<MonicoCode language='${language}' mode="diff"><div id="left">${escapedTextLeft}</div><div id="right">${escapedTextRight}</div></MonicoCode>`;
+            } else {
+                let escapedText = this.escapeHtml(text);
+
+                return `<MonicoCode language='${language}'>${escapedText}</MonicoCode>`;
+            }
         };
 
         let summary = obj.start != null ? marked.parser(obj.start, {
@@ -103,7 +117,10 @@ export default class MarkdownLexor {
 
         // Here I think it'd be best to convert the markdown into json, then work with it.
         // Although there a small argument that markdown isn't the correct format in the first place.
-        let lex : marked.TokensList = marked.lexer(text);
+
+        let lexer = new marked.Lexer();
+
+        let lex : marked.TokensList = lexer.lex(text);
 
         let groups = this.SplitByHeading(1, lex);
 

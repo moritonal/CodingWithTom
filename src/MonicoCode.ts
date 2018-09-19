@@ -94,11 +94,17 @@ export default {
       type: String,
       default: "html"
     },
+    mode: {
+      type: String,
+      default: "editor"
+    },
     options: Object
   },
   data: function() : IData {
     return <IData>{
-      editor: null
+      editor: null,
+      left: String,
+      right: String
     }
   },
   model: {
@@ -120,7 +126,13 @@ export default {
 
   mounted() {
 
-    this.value = this.$refs.code.innerText;
+    if (this.mode === "editor") {
+      this.value = this.$refs.code.innerText;
+    } else if (this.mode === "diff") {
+      this.left =(<HTMLElement>this.$refs.code).querySelector("#left").innerText;
+      this.right =(<HTMLElement>this.$refs.code).querySelector("#right").innerText;
+    }
+
     this.initMonaco()
   },
 
@@ -133,25 +145,63 @@ export default {
 
       let element = this.$refs.editor;
 
+      if (this.mode === "editor") {
+        
       console.log("Creating editor for", this.language);
 
-      this.editor = monaco.editor.create(element, {
-        value: this.value,
-        language: this.language,
-        theme: 'vs-dark',
-        readOnly: true,
-        automaticLayout: false,
-        scrollBeyondLastLine: false,
-        scrollbar: {
-            vertical: "hidden"
-        } as monaco.editor.IEditorScrollbarOptions
-      });
+        this.editor = monaco.editor.create(element, {
+          value: this.value,
+          language: this.language,
+          theme: 'vs-dark',
+          readOnly: true,
+          automaticLayout: true,
+          scrollBeyondLastLine: false,
+          scrollbar: {
+              vertical: "hidden"
+          } as monaco.editor.IEditorScrollbarOptions
+        });
 
-      let lines = this.editor.getModel().getLineCount() + 2;
+        let lines = this.editor.getModel().getLineCount() + 1;
 
-      const contentHeight = lines * 19;
+        const contentHeight = lines * 19;
 
-      element.style.height = contentHeight;
+        element.style.height = contentHeight;
+        
+      } else if (this.mode === "diff") {
+
+        var originalModel = monaco.editor.createModel(this.left, this.language);
+        var modifiedModel = monaco.editor.createModel(this.right, this.language);
+
+        this.editor = monaco.editor.createDiffEditor(element,
+        {
+          language: this.language,
+          theme: 'vs-dark',
+          readOnly: true,
+          automaticLayout: true,
+          scrollBeyondLastLine: false,
+          scrollbar: {
+            vertical: "hidden",
+          } as monaco.editor.IEditorScrollbarOptions
+        });
+
+        element.blur();
+
+        this.editor.setModel({
+          original: originalModel,
+          modified: modifiedModel
+        });
+
+        let maxLines = Math.max(this.editor.getModel().original.getLineCount(), this.editor.getModel().modified.getLineCount());
+
+        let lines = maxLines + 1;
+
+        const contentHeight = lines * 19;
+
+        element.style.height = contentHeight;
+        //this.$refs.editor_container.style.height = contentHeight;
+      }
+
+      
 
       this.editor.layout();
     },
