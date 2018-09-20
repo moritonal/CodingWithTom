@@ -1,8 +1,13 @@
 <template>
+
   <div id="app">
-    <div v-if="this.state == 'SHOW'">
-        <Tutorial v-bind:markdown="this.markdown" />
+
+    <div class="flex-wrapper">
+      <div v-if="this.state == 'SHOW'">
+          <Tutorial v-bind:markdown="this.markdown" />
+      </div>
     </div>
+
     <transition name="sweep" duration="500">
       <div v-bind:class="{fullPageOverlay : true}" v-show="this.state == 'LOADING'">
         <h1>Loading</h1>
@@ -56,13 +61,15 @@ export default {
   border: 1px solid rgb(0,0,0,0.4s);
   border-radius: 10px;
 
-  display: flex;
+  display: flex;  
   align-items: center;
   justify-content: center;
 }
 
-#app {
-
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 html {

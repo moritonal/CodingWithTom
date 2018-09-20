@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="tutorial">
       <div v-if="this.markdown != null">
 
             <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
@@ -46,13 +46,15 @@ export default {
 
 <style lang="css">
 
-#app {
+#tutorial {
     margin: 0px;
     padding: 20px;
 
     font-size: 110%;
     font-weight: 400;
     font-family: "Segoe UI",Arial,sans-serif;
+
+    max-width: 920px;
 }
 
 body {

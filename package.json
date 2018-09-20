@@ -29,6 +29,7 @@
     "vue": "^2.5.17",
     "vue-hot-reload-api": "^2.3.0",
     "vue-monaco": "^0.2.0",
+    "vue-router": "^3.0.1",
     "webpack": "^4.19.0"
   },
   "name": "CodingWithTom",
