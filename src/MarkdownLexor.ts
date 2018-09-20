@@ -8,7 +8,7 @@ class GroupedMarkdownLex {
 
     get children() : GroupedMarkdownLex[] {
         
-        return MarkdownLexor.SplitByHeading(4, this.data);
+        return MarkdownLexor.SplitByHeading(2, this.data);
     }
 
     constructor(data : marked.TokensList, start? : marked.TokensList) {

@@ -23,8 +23,8 @@ async function StringToKey(key : string) : Promise<string> {
   let hex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
   
   return hex;
-
 }
+
 export default {
   name: "Answer",
   data() {
@@ -116,6 +116,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  user-select: none;
+  -moz-user-select: none;
+  -moz-user-focus: ignore;
 }
 
 .payload {
@@ -124,6 +128,10 @@ export default {
 
 .payload.blurred {
   filter: blur(6px);
+
+  user-select: none;
+  -moz-user-select: none;
+  -moz-user-focus: ignore;
 }
 
 .clickable {
