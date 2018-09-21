@@ -1,7 +1,7 @@
 <template>
-  <div>
-      StretchGoal
-  </div>
+  <span>
+      <slot/>
+  </span>
 </template>
 
 <script lang="ts">

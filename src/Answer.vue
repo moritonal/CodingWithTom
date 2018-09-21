@@ -142,6 +142,7 @@ export default {
 .answer {
   padding: 10;
   border-radius: 10px;
+  margin-bottom: 15px;
 }
 
 .black-border {

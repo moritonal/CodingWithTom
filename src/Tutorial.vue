@@ -72,14 +72,15 @@ export default {
           this.scrollToTop();      
       },
       PreviousObjective: function() {
-          window.history.back();
-          this.currentUrl = window.location.pathname;          
+          console.log("Going back");
+          window.history.go(-1);
+          return false;
       },
       scrollToTop: function() {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0;
         },
-        updateTitle() {
+    updateTitle() {
             let i = this.currentObjectiveIndex;
             if (i === -1) {
                 document.title = "Coding With Tom";
@@ -90,6 +91,20 @@ export default {
   },
   mounted: async function() {
     this.updateTitle();
+
+    window.onpopstate = (evt) => {
+          this.currentUrl = window.location.pathname;
+    }
+
+    document.onkeydown = (key) => {
+        console.log(key)
+
+        if (key.code === "ArrowRight") {
+            this.NextObjective();
+        } else if (key.code === "ArrowLeft") {
+            this.PreviousObjective();
+        }
+    }
   },
   watch: {
       currentUrl: function(val) {
@@ -151,6 +166,13 @@ export default {
 body {
     margin: 0;
     background-color: antiquewhite;
+}
+
+img {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 </style>

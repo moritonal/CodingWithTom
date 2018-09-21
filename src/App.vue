@@ -19,7 +19,7 @@
 <script>
 
 import Tutorial from "./Tutorial.vue"
-import Data from "./Test.txt"
+import Data from "./Tutorial_UploadingData.md"
 
 export default {
   name: "App",

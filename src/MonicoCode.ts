@@ -50,6 +50,8 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution';
 import 'monaco-editor/esm/vs/language/html/monaco.contribution';
 // import 'monaco-editor/esm/vs/basic-languages/css/css.contribution.js';
 import 'monaco-editor/esm/vs/basic-languages/html/html.contribution.js';
+import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.js';
+import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution.js';
 import 'monaco-editor/esm/vs/basic-languages/typescript/typescript.contribution.js';
 
 import * as monaco from "monaco-editor"
