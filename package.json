@@ -46,7 +46,7 @@
     "build": "parcel build .\\index.html & gulp",
     "parcel": "parcel build index.html --detailed-report --public-url ./",
     "gulp": "gulp",
-    "deploy": "gh-pages-deploy"
+    "deploy": "gh-pages -d dist"
   },
   "gh-pages-deploy": {
     "staticpath": "dist",

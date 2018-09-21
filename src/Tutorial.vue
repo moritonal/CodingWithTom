@@ -17,7 +17,7 @@
         </nav>
     
         <div v-if="this.markdown != null" id="tutorial">           
-            <div v-show="currentUrl === '/'">
+            <div v-show="currentCleanUrl === '/'">
                 <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
 
                 <div class="d-flex justify-content-center">
@@ -29,7 +29,7 @@
 
             <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title">
 
-                <div v-if="currentUrl === `/${objective.url}`">
+                <div v-if="currentCleanUrl === `/${objective.url}`">
                     <TutorialSection v-bind="objective"></TutorialSection>
 
                     <div class="d-flex justify-content-center">
@@ -202,11 +202,14 @@ export default {
     },
     currentObjectiveIndex: function() {
 
-        if (this.currentUrl == "/") {
+        if (this.currentCleanUrl == "/") {
             return -1;
         } else {
             return this.jsonObject.objectives.findIndex( (i : any) => this.currentUrl === `/${i.url}`);
         }
+    },
+    currentCleanUrl: function() {
+        return this.currentUrl.replace(/^(.*)\//g, "");
     }
   }
 };
