@@ -209,7 +209,7 @@ export default {
         }
     },
     currentCleanUrl: function() {
-        return this.currentUrl.replace(/^(.*)\//g, "");
+        return this.currentUrl.replace(/^(.*)(?=\/)/g, "");
     }
   }
 };
