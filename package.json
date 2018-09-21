@@ -6,8 +6,10 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "css-loader": "^1.0.0",
+    "cssnano": "^4.1.0",
     "file-loader": "^2.0.0",
     "gulp": "^3.9.1",
+    "parcel-bundler": "^1.9.7",
     "ts-loader": "^5.1.1",
     "typescript": "^3.0.3",
     "vue-loader": "^15.4.2",
@@ -39,8 +41,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./webpack.config.js",
-    "postbuild": "gulp"
+    "build": "parcel build .\\index.html & gulp"
   },
   "repository": {
     "type": "git",

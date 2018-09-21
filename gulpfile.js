@@ -14,4 +14,11 @@ gulp.task('copy-workers',function(){
     .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task("default", ["copy-pics", "copy-workers"]);
+gulp.task("noJekyll", () => {
+    const path = require("path");
+    const fs = require("fs");
+
+    fs.writeFileSync(path.join("./dist", ".nojekyll"), "")
+})
+
+gulp.task("default", ["copy-pics", "noJekyll", "copy-workers"]);
