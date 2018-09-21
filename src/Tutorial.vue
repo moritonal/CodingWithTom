@@ -117,17 +117,18 @@ export default {
     },
     updateTutorialName() {
         let url = localStorage.getItem("savedMarkdownUrl");
-
-        console.log(url);
         
         if (url == null)
             return;
+
+        console.log("Current URL", url);        
 
         let possibleTitle = url.replace(/^(.*\/)/g, "");
 
         this.tutorialName = possibleTitle.replace(/_/g, " ").replace(/\.md/g, "");
     },
     exitTutorial : function() {
+        console.log("Exiting tutorial");
         this.$emit("exitTutorial");
     }
   },
@@ -136,6 +137,7 @@ export default {
     this.updateAnswersRevealed();
     this.updateTutorialName();
 
+    console.log("Current Path", this.currentCleanUrl);
     window.onpopstate = (evt) => {
           this.currentUrl = window.location.pathname;
     }
@@ -162,7 +164,7 @@ export default {
         if (this.cachedJsonObjectives != null) 
             return this.cachedJsonObjectives;
 
-        console.log("Processing markdown");
+        console.log("Processing markdown", this.markdown);
 
         let objectives = MarkdownLexor.Parse(this.markdown);
 
