@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+var rename = require('gulp-rename');
 
 gulp.task('copy-pics',function(){
     return gulp.src([
@@ -14,6 +15,14 @@ gulp.task('copy-workers',function(){
     .pipe(gulp.dest('./dist/'));
 });
 
+gulp.task("noNotFound", () => {
+    return gulp.src([
+        './dist/index.html',
+    ]) 
+    .pipe(rename("404.html"))
+    .pipe(gulp.dest('./dist/'));
+})
+
 gulp.task("noJekyll", () => {
     const path = require("path");
     const fs = require("fs");
@@ -21,4 +30,4 @@ gulp.task("noJekyll", () => {
     fs.writeFileSync(path.join("./dist", ".nojekyll"), "")
 })
 
-gulp.task("default", ["copy-pics", "noJekyll", "copy-workers"]);
+gulp.task("default", ["copy-pics", "noNotFound", "noJekyll", "copy-workers"]);
