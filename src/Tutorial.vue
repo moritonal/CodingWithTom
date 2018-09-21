@@ -1,7 +1,22 @@
 <template>
-  <div id="tutorial">
-      <div v-if="this.markdown != null">
-
+    <div>
+        <nav class="navbar navbar-light fixed-top bg-light my-border-bottom">
+            <a class="navbar-brand">Coding With Tom</a>
+            <ul class="nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link">Revealed Answers: {{answersRevealed}}/{{answersTotal}}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link">Current Objective: {{currentObjectiveIndex + 1}}/{{totalObjectives}}</a>
+                </li>
+            </ul>
+            <form class="form-inline m-0">
+                <button type="button" class="btn btn-primary">{{tutorialName}}</button>
+                <button type="button" class="btn btn-danger ml-2" v-on:click="exitTutorial">Exit</button>
+            </form>
+        </nav>
+    
+        <div v-if="this.markdown != null" id="tutorial">           
             <div v-show="currentUrl === '/'">
                 <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
 
@@ -47,7 +62,9 @@ export default {
     return {
       currentUrl: window.location.pathname,
       objectives: null,
-      cachedJsonObjectives: null
+      cachedJsonObjectives: null,
+      answersRevealed: null,
+      tutorialName: null
     };
   },
   props: ["markdown"],
@@ -72,7 +89,6 @@ export default {
           this.scrollToTop();      
       },
       PreviousObjective: function() {
-          console.log("Going back");
           window.history.go(-1);
           return false;
       },
@@ -87,24 +103,53 @@ export default {
             } else {
                 document.title = `Coding With Tom - ${this.jsonObject.objectives[i].title}`;
             }
-        }
+    },
+    onStorage() {
+        console.log("Update");
+        this.updateAnswersRevealed();
+    },
+    updateAnswersRevealed: function() {
+        let revealedObj = localStorage.getItem("score") ;
+
+        let revealed = (revealedObj === null ? null : parseInt(revealedObj)) || 1;
+        
+        this.answersRevealed = revealed - 1;
+    },
+    updateTutorialName() {
+        let url = localStorage.getItem("savedMarkdownUrl");
+
+        console.log(url);
+        
+        if (url == null)
+            return;
+
+        let possibleTitle = url.replace(/^(.*\/)/g, "");
+
+        this.tutorialName = possibleTitle.replace(/_/g, " ").replace(/\.md/g, "");
+    },
+    exitTutorial : function() {
+        this.$emit("exitTutorial");
+    }
   },
   mounted: async function() {
     this.updateTitle();
+    this.updateAnswersRevealed();
+    this.updateTutorialName();
 
     window.onpopstate = (evt) => {
           this.currentUrl = window.location.pathname;
     }
 
     document.onkeydown = (key) => {
-        console.log(key)
-
         if (key.code === "ArrowRight") {
             this.NextObjective();
         } else if (key.code === "ArrowLeft") {
             this.PreviousObjective();
         }
     }
+
+    window.addEventListener("answerRevealed", this.onStorage, false);
+
   },
   watch: {
       currentUrl: function(val) {
@@ -121,6 +166,18 @@ export default {
 
         let objectives = MarkdownLexor.Parse(this.markdown);
 
+        if (objectives == null) {
+
+            // Encountered problem with this url
+            this.$emit("cannotParse");
+
+            return {
+                summary: "Error rendering",
+                objectives: [],
+                text: null
+            };
+        }
+
         for (let objective of objectives.objectives) {
 
             let summary = objective.summary;
@@ -136,6 +193,12 @@ export default {
         this.cachedJsonObjectives = objectives;
 
         return objectives;
+    },
+    answersTotal: function() {
+        return (this.markdown.match(/\<\/Answer/g) || []).length
+    },
+    totalObjectives: function() {
+        return this.jsonObject.objectives.length;
     },
     currentObjectiveIndex: function() {
 
@@ -161,6 +224,11 @@ export default {
     font-family: "Segoe UI",Arial,sans-serif;
 
     max-width: 920px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 70px;
 }
 
 body {
@@ -173,6 +241,10 @@ img {
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
+
+.my-border-bottom {    
+    border-bottom: #ffffff2b 1px solid;
 }
 
 </style>

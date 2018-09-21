@@ -77,6 +77,8 @@ export default {
         
         console.log(`${score}/${totalAnswers}`);
 
+        window.dispatchEvent(new Event("answerRevealed"));
+
         this.storedBlurred = false;
       }
     }

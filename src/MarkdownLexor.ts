@@ -118,18 +118,28 @@ export default class MarkdownLexor {
         // Here I think it'd be best to convert the markdown into json, then work with it.
         // Although there a small argument that markdown isn't the correct format in the first place.
 
-        let lexer = new marked.Lexer();
+        if (text == null)
+            return null;
+        
+        try {
 
-        let lex : marked.TokensList = lexer.lex(text);
+            let lexer = new marked.Lexer();
 
-        let groups = this.SplitByHeading(1, lex);
+            let lex : marked.TokensList = lexer.lex(text);
+            
+            let groups = this.SplitByHeading(1, lex);
 
-        let obj = this.GroupsToObj({
-            children: groups.filter(i=>i.start != null),
-            start: (groups.filter(i=>i.start == null)[0]).data,
-            data: []
-        });
+            let obj = this.GroupsToObj({
+                children: groups.filter(i=>i.start != null),
+                start: (groups.filter(i=>i.start == null)[0]).data,
+                data: []
+            });
 
-        return obj;
+            return obj;
+        }
+        catch (ex) {
+            console.warn("Couldn't process markdown, leaving tutorial", ex);
+            return null;
+        }
     }
 }
