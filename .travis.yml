@@ -13,7 +13,8 @@ before_install:
 
 script:
   - npm install
-  - npm run build
+  - npm run parcel
+  - npm run gulp
 
 cache:
   directories:
