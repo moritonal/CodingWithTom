@@ -1,8 +1,8 @@
-If you see text such as `index.html:45`, it's referring to the file `index.html` and line `45`. `index.js:DoSomething()` refer's to the file `index.html` and function `DoSomething()`. Most objectives are written to be easily Googled into a solution.
+If you see text such as `index.html:45`, it's referring to the file `index.html` and line `45`. `index.js:DoSomething()` refer's to the file `index.html` and function `DoSomething()`. Most objectives can be easily Googled for a solution.
 
-The tutorial is designed as a series of objectives and tasks. The tasks will come with enough information to complete, but if you find yourself stuck there is an answer provided, which is uncovered when clicked on.
+The tutorial is designed as a series of objectives and tasks. Tasks come with enough information to complete, but if you find yourself stuck you can reveal the the solution.
 
-The number of answer's uncovered is tallied in the top-right, but it's important to stress that it's okay to use all or none of the answers, they are simply designed to let you challenge yourself to spend a short period trying to solve it yourself.
+The number of uncovered answers is tallied in the top-right, but it's important to stress that it's okay to use all or none of the answers. The tasks are simply designed to let you challenge yourself to spend a short period trying to solve the problem.
 
 All data is stored locally, your progress is not stored online.
 
@@ -13,26 +13,17 @@ Visual Code is Microsoft's latest release, designed to be easier for web develop
 
 ## Install and open Visual Studio Code
 
-**Install** the Visual Studio Code (VS-Code) IDE from Microsoft and **open it**. You can accept all default settings.
+**Install** the [Visual Studio Code (VS-Code) IDE]( https://code.visualstudio.com/) from Microsoft and **open it**.
 
-<Answer>
-
-* Visit https://code.visualstudio.com/ and click "Download for Windows"
 * Once the file has downloaded, install it, accepting all defaults.
-
-</Answer>
 
 ## Open an empty folder
 
 **Create** and **open** an empty folder.
 
-<Answer>
-
 * Click "Open folder..."
 * Create a directory
 * Then select `Open it`
-
-</Answer>
 
 ## Open VS-Code's in-built Terminal
 
@@ -40,7 +31,7 @@ Visual Code is Microsoft's latest release, designed to be easier for web develop
 
 <Answer>
 
-* In the menu at the top, click View, then select Terminal.
+* In the menu at the top, click View, then select Terminal.s
 
 </Answer>
 
@@ -269,7 +260,7 @@ It should look something like this:
 
 # Write a function
 
-Function's are blocks of code that can be called multiple times. Replace all of `index.js` with the following:
+Functions are blocks of code that can be called multiple times. Replace all of `index.js` with the following:
 
 ```javascript
 console.log("Hello, World");
