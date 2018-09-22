@@ -658,12 +658,15 @@ Congrats, you've completed the core exercise and finished this tutorial. From he
     * We just wrote some text into the HTML page. Learn what `<span>` tags are and use them in `index.html`.
 * Put the inputs onto new lines
     * Similar to the last task, use `<div>` tags to space out the inputs better.
+* Visually make the web-page more user friendly.
+* Use a select input to limit the possible bin types
 
 ## Medium
 
 * Convert the scripts to `Typescript`
     * Typescript is a language like Javascript, but comes with a few helpfull features. Read up on `parceljs and typescript` and see if you can convert `index.js` to use Typescript.
 * Load an image onto the page
+* Fix a mistake in this tutorial
 
 ## Hard
 
@@ -671,6 +674,5 @@ Congrats, you've completed the core exercise and finished this tutorial. From he
     * To help make Webpages visually nicer, many developers have produced libraries of CSS and code. Use Bootstrap to style your page.
 * Use `async` to make the `fetch` request.
     * `Async` is a keyword in Javascript allowing you to handle asyncronous code. Use async with `fetch` to output the response.
-* Visually make the web-page more interesting.
 * Visually show the user they've uploaded their data correctly.
 * Use JavaSciprt's GPS api to fill in the longitude and latitude

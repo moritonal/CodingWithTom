@@ -42,16 +42,16 @@
 <script>
 
 import Tutorial from "./Tutorial.vue"
-import LiveTutorial from "./../tutorials/Tutorial_UploadingData.md"
+// import LiveTutorial from "./../tutorials/Tutorial_UploadingData.md"
 
 export default {
   name: "App",
   data() {
     return {
       state: "INIT",
-      markdownUrl: LiveTutorial,
+      markdownUrl: null,
       defaultUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom.Build/master/tutorials/Tutorial_UploadingData.md",
-      storedMarkdownUrl: LiveTutorial,
+      storedMarkdownUrl: null,
       markdown: null
     };
   },

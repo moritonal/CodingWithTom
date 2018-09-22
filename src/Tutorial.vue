@@ -1,17 +1,26 @@
 <template>
     <div>
         <nav class="navbar navbar-light fixed-top bg-light my-border-bottom">
-            <a class="navbar-brand">Coding With Tom</a>
+            <a class="navbar-brand d-none d-sm-flex">Coding With Tom</a>
+            <a class="navbar-brand d-flex d-sm-none">CWT</a>
             <ul class="nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link">Revealed Answers: {{answersRevealed}}/{{answersTotal}}</a>
+                    <a class="nav-link d-flex">
+                        <span class="d-none d-none d-md-flex">Revealed Answers:</span>
+                        <span class="d-flex d-md-none">A:</span>
+                        <span>{{answersRevealed}}/{{answersTotal}}</span>
+                    </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link">Current Objective: {{currentObjectiveIndex + 1}}/{{totalObjectives}}</a>
+                    <a class="nav-link d-flex">
+                        <span class="d-none d-none d-md-flex">Current Objective:</span>
+                        <span class="d-flex d-md-none">O:</span>
+                        <span>{{currentObjectiveIndex + 1}}/{{totalObjectives}}</span>
+                    </a>
                 </li>
             </ul>
             <form class="form-inline m-0">
-                <button type="button" class="btn btn-primary">{{tutorialName}}</button>
+                <button type="button" class="btn btn-primary d-none d-md-flex">{{tutorialName}}</button>
                 <button type="button" class="btn btn-danger ml-2" v-on:click="exitTutorial">Exit</button>
             </form>
         </nav>
@@ -125,11 +134,11 @@ export default {
         if (url == null)
             return;
 
-        console.log("Current URL", url);        
+        console.log("Current URL", url);
 
         let possibleTitle = url.replace(/^(.*\/)/g, "");
 
-        this.tutorialName = possibleTitle.replace(/_/g, " ").replace(/\.md/g, "");
+        this.tutorialName = possibleTitle.replace(/_/g, " ").replace(/\.(.*)md/g, "");
     },
     exitTutorial : function() {
         console.log("Exiting tutorial");
