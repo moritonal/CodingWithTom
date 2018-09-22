@@ -213,7 +213,7 @@ export default {
         if (this.currentCleanUrl == "/") {
             return -1;
         } else {
-            return this.jsonObject.objectives.findIndex( (i : any) => this.currentUrl === `/${i.url}`);
+            return this.jsonObject.objectives.findIndex( (i : any) => this.currentCleanUrl === `/${i.url}`);
         }
     },
     currentCleanUrl: function() {
