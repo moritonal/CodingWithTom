@@ -133,7 +133,7 @@ export default {
     },
     exitTutorial : function() {
         console.log("Exiting tutorial");
-        this.$emit("exitTutorial");
+        this.$emit("exit-tutorial");
     }
   },
   mounted: async function() {
@@ -175,7 +175,7 @@ export default {
         if (objectives == null) {
 
             // Encountered problem with this url
-            this.$emit("cannotParse");
+            this.$emit("cannot-parse");
 
             return {
                 summary: "Error rendering",

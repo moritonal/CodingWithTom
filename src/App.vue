@@ -12,12 +12,12 @@
             <span>Please type in or paste the tutorial URL you've been given.</span>
             
             <form v-on:submit.prevent="onSubmitUrl">
-            <div class="input-group mt-3">
-              <input type="text" v-model="markdownUrl" class="form-control" v-bind:placeholder="defaultUrl">
-              <div class="input-group-append">
-                <button class="btn btn-success" type="submit">Go</button>
+              <div class="input-group mt-3">
+                <input type="text" v-model="markdownUrl" class="form-control" v-bind:placeholder="defaultUrl">
+                <div class="input-group-append">
+                  <button class="btn btn-success" type="submit">Go</button>
+                </div>
               </div>
-            </div>
             </form>
           </div>
         </div>
@@ -27,8 +27,8 @@
     <div v-if="this.state == 'SHOW'">
         <Tutorial
           v-bind:markdown="this.markdown"
-          v-on:cannotParse="RemoveUrl"
-          v-on:exitTutorial="exitTutorial"/>
+          v-on:cannot-parse="RemoveUrl"
+          v-on:exit-tutorial="exitTutorial"/>
     </div>
 
     <transition name="sweep" duration="500">
