@@ -16,7 +16,8 @@
             </form>
         </nav>
     
-        <div v-if="this.markdown != null" id="tutorial">           
+        <div v-if="this.markdown != null" id="tutorial">
+
             <div v-show="currentCleanUrl === '/'">
                 <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
 
@@ -34,8 +35,8 @@
 
                     <div class="d-flex justify-content-center">
                         <div class="btn-group btn-group-justified" role="group">
-                        <button type="button" class="btn btn-secondary p-2" v-on:click="PreviousObjective">Previous</button>
-                        <button type="button" class="btn btn-primary p-2" v-on:click="NextObjective">Next</button>
+                            <button type="button" class="btn btn-secondary p-2" v-on:click="PreviousObjective">Previous</button>
+                            <button type="button" class="btn btn-primary p-2" v-on:click="NextObjective" v-if="currentObjectiveIndex + 1 != totalObjectives">Next</button>
                         </div>
                     </div>
                 </div>
@@ -80,7 +81,6 @@ export default {
             let nextObjectiveId = this.currentObjectiveIndex + 1;
 
             if (nextObjectiveId >= this.jsonObject.objectives.length) {
-                window.location.href = "https://bonner.is";
                 return;
             }
 
