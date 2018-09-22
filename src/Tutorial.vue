@@ -192,6 +192,8 @@ export default {
             objective.url = summaryUrl;
         }
 
+        console.log("Objectives", objectives);
+
         this.cachedJsonObjectives = objectives;
 
         return objectives;
