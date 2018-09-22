@@ -115,9 +115,9 @@ export default {
     updateAnswersRevealed: function() {
         let revealedObj = localStorage.getItem("score") ;
 
-        let revealed = (revealedObj === null ? null : parseInt(revealedObj)) || 1;
+        let revealed = (revealedObj === null ? null : parseInt(revealedObj)) || 0;
         
-        this.answersRevealed = revealed - 1;
+        this.answersRevealed = revealed;
     },
     updateTutorialName() {
         let url = localStorage.getItem("savedMarkdownUrl");

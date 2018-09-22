@@ -44,7 +44,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build .\\index.html & gulp",
+    "build": "npm run parcel | npm run gulp | npm run deploy",
     "parcel": "parcel build index.html --detailed-report --public-url ./",
     "gulp": "gulp",
     "deploy": "gh-pages -d dist"
@@ -61,7 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Glitch0011/CodingWithTom.git"
+    "url": "https://github.com/Glitch0011/CodingWithTom.git"
   },
   "keywords": [],
   "author": "",
