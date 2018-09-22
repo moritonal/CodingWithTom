@@ -49,7 +49,7 @@ export default {
     return {
       state: "INIT",
       markdownUrl: null,
-      defaultUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom/master/src/Tutorial_UploadingData.md",
+      defaultUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom.Build/master/src/Tutorial_UploadingData.md",
       storedMarkdownUrl: null,
       markdown: null
     };
@@ -71,6 +71,7 @@ export default {
         this.storedMarkdownUrl = null;
     },
     "exitTutorial": function() {
+        console.log("App.vue ExitTutorial");
         localStorage.removeItem("savedMarkdownUrl");
         this.storedMarkdownUrl = null;
     }

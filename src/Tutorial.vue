@@ -73,36 +73,40 @@ export default {
       TutorialSummary
   },
   methods: {
-      NextObjective: function() {
+    NextObjective: function() {
 
-          let nextObjectiveId = this.currentObjectiveIndex + 1;
+            console.log("CurrentObjectiveIndex", this.currentObjectiveIndex);
 
-          if (nextObjectiveId >= this.jsonObject.objectives.length) {
-              window.location.href = "https://bonner.is";
-              return;
-          }
+            let nextObjectiveId = this.currentObjectiveIndex + 1;
 
-          let nextObjective = this.jsonObject.objectives[nextObjectiveId];
+            if (nextObjectiveId >= this.jsonObject.objectives.length) {
+                window.location.href = "https://bonner.is";
+                return;
+            }
 
-          window.history.pushState(null, null, nextObjective.url);
-          this.currentUrl = window.location.pathname;
-          this.scrollToTop();      
+            let nextObjective = this.jsonObject.objectives[nextObjectiveId];
+
+            console.log("NextObjective", nextObjective.url);
+
+            window.history.pushState(null, null, nextObjective.url);
+            this.currentUrl = window.location.pathname;
+            this.scrollToTop();      
       },
-      PreviousObjective: function() {
+    PreviousObjective: function() {
           window.history.go(-1);
           return false;
       },
-      scrollToTop: function() {
+    scrollToTop: function() {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0;
         },
     updateTitle() {
-            let i = this.currentObjectiveIndex;
-            if (i === -1) {
-                document.title = "Coding With Tom";
-            } else {
-                document.title = `Coding With Tom - ${this.jsonObject.objectives[i].title}`;
-            }
+        let i = this.currentObjectiveIndex;
+        if (i === -1) {
+            document.title = "Coding With Tom";
+        } else {
+            document.title = `Coding With Tom - ${this.jsonObject.objectives[i].title}`;
+        }
     },
     onStorage() {
         console.log("Update");
