@@ -145,13 +145,11 @@ We can do this by placing a `<div>` element above our script in `index.html`.
 </html>
 ```
 
-A `<div>` element is used for spacing, telling the browser to put anything inside of this on it's own line. We're using it as a container for our map.
+A `<div>` element is used for spacing, telling the browser to put anything inside of this on it's own line. We're going to tell our Map library to use this as a container for our map.
 
 # Load the map
 
-Setting up the BingMaps requires knowing about a pile of odd bits of javascript, so to make life easier I've put together an NPM package to make this easier.
-
-This let's us concentrate on the application we're trying to make, and less about the legwork.
+Bing maps (yes, Bing) is an easy to use library for drawing a map in our site. We'll be using a library called `simplebingmaps` to create and control the map.
 
 Replace `index.js` with:
 
@@ -181,7 +179,7 @@ The results should look like this:
 
 ## Move the dot
 
-Move the dot from **London Waterloo** to **14 Pier Walk**.
+You'll see that we've hard-coded the lat-long for our dot into the code. **Move** the dot from **London Waterloo** to **14 Pier Walk**.
 
 <Answer>
 
@@ -223,7 +221,7 @@ map.onLoad = () => {
 
 ## Center the map
 
-Similar to the `addPoint` function, map has a `setCenter` function. Use this to center the map on 14 Pier Walk.
+Similar to the `map.addPoint` function, map has a `map.setCenter` function with the same parameters (where parameters are the things you pass into a function between the `(` and `)`). Use this function, inside the `onLoad` function, to center the map on **14 Pier Walk**'s coordinates.
 
 <Answer>
 
@@ -266,4 +264,411 @@ map.onLoad = () => {
 
 </Answer>
 
-I mean
+Now the map should be centered on Pier Walk.
+
+## Set the zoom
+
+The third ability our API gives us is the `setZoom` function. This lets us control how zoomed in we are on the map.
+
+Use `setZoom`, which takes a single number as a parameter to zoom in on Pier Walk.
+
+<Answer>
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+}
+```
+
+</Answer>
+
+# Fetch the data
+
+Now we can control the map, we need to `get` the data from our API.
+
+In the previous tutorial we discovered how to `post` data up to our cloud, so now we'll do the inverse to `get` data from it.
+
+[Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), download the data from `https://assetmapperapi.azurewebsites.net/api/assets`, and **output** it to the console.
+
+Note, you'll have to get to grips with the idea of either Promises or async to do this. A good tutorial by Google is available [here](https://developers.google.com/web/fundamentals/primers/promises).
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            console.log(json);
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+# Learning about arrays
+
+Now we have the data being outputted into our console, we should take an aside to talk about iterating over loops in Javascript.
+
+Array's are created with the following syntax. This would be an array of the numbers `1`, `2` and `3`.
+
+```javascript
+let array = [1, 2, 3];
+```
+
+Javascript gives us plenty of ways of iterating over an array. First, there's the simple classic `for` loop.
+
+```javascript
+let array = [1, 2, 3];
+
+for (let i = 0; i < array.length; i++) {
+
+    let current = array[i];
+
+    console.log(current);
+}
+```
+
+I won't add to the thousands of tutorials explaining how that works. Next, the `map` function. The `map` function executes over every item in the array.
+
+```javascript
+let array = [1, 2, 3];
+
+array.forEach(current => {
+    console.log(current);
+})
+```
+
+And finally, we have the new `for` statement.
+
+```javascript
+let array = [1, 2, 3];
+
+for (let current of array) {
+    console.log(current);
+}
+```
+
+# Iterate over the returned map points
+
+Using this understanding of iterating over arrays, and knowing that the response variable `json` is an array, output each point's `Latitude` value to the console.
+
+<Answer>
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            console.log(json);
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                console.log(current.Latitude);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+</Answer>
+
+The results should now be outputted one by one.
+
+# Draw the map points
+
+Given we can now output the points to the console, use the `addPoint` function to add these points to the map.
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                console.log(current.Latitude);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+# Add text to our points
+
+## Add some static text
+
+In Javascript, functions can have multiple arguments passed into it. The `addPoint` takes a third argument which sets it's label.
+
+Try test it now with the existing `addPoint` call.
+
+```javascript
+// Add a point to it
+map.addPoint(51.501030, 0.006361);
+```vs
+// Add a point to it
+map.addPoint(51.501030, 0.006361, "Test");
+```
+
+If it's all working as it should "Test" should appear next to our hard-coded point. 
+
+## Add the `Type` of the asset
+
+We know know we can set the label of the point on the map with the third argument to our objective.
+
+Use the `Type` field on our data to write the asset's type next to it's dot on the map.
+
+<Answer>
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+</Answer>
+
+The type should now appear as text beneath the dots on the map.
