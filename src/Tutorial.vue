@@ -44,8 +44,8 @@
 
                     <div class="d-flex justify-content-center">
                         <div class="btn-group btn-group-justified" role="group">
-                            <button type="button" class="btn btn-secondary p-2" v-on:click="PreviousObjective">Previous</button>
-                            <button type="button" class="btn btn-primary p-2" v-on:click="NextObjective" v-if="currentObjectiveIndex + 1 != totalObjectives">Next</button>
+                            <button type="button" class="btn btn-secondary p-3 px-4" v-on:click="PreviousObjective">Previous</button>
+                            <button type="button" class="btn btn-primary p-3 px-4" v-on:click="NextObjective" v-if="currentObjectiveIndex + 1 != totalObjectives">Next</button>
                         </div>
                     </div>
                 </div>

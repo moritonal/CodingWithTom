@@ -676,3 +676,4 @@ Congrats, you've completed the core exercise and finished this tutorial. From he
     * `Async` is a keyword in Javascript allowing you to handle asyncronous code. Use async with `fetch` to output the response.
 * Visually show the user they've uploaded their data correctly.
 * Use JavaSciprt's GPS api to fill in the longitude and latitude
+* Add a button to delete all assets
