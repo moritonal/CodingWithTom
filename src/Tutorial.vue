@@ -122,7 +122,7 @@ export default {
         this.updateAnswersRevealed();
     },
     updateAnswersRevealed: function() {
-        let revealedObj = localStorage.getItem("score") ;
+        let revealedObj = localStorage.getItem(`${localStorage.getItem("savedMarkdownUrl")}score`) ;
 
         let revealed = (revealedObj === null ? null : parseInt(revealedObj)) || 0;
         

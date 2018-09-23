@@ -64,14 +64,14 @@ export default {
         console.log("Reveal answer", this.key);
         localStorage.setItem(this.key, "false");
 
-        let scoreStr = localStorage.getItem("score") ;
+        let scoreStr = localStorage.getItem(`${localStorage.getItem("savedMarkdownUrl")}score`);
 
         let score = scoreStr === null ? null : parseInt(scoreStr);
         if (score == null)
           score = 1;
         else 
           score = score + 1;
-        localStorage.setItem("score", score.toString());
+        localStorage.setItem(`${localStorage.getItem("savedMarkdownUrl")}score`, score.toString());
 
         let totalAnswers = document.querySelectorAll(".answer").length;
         
