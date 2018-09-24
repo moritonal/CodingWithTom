@@ -38,7 +38,7 @@ Follow the tutorial [here](https://www.npmjs.com/get-npm).
 
 </Answer>
 
-## Install ParcelJs via NPM
+## Install ParcelJs's Bundler via NPM
 
 ParcelJs is one of the aforementioned tools we'll be using. It takes the code you write, adds a collection of useful functionality for you as a developer, then hosts a server locally for you to view in a browser.
 
@@ -595,7 +595,7 @@ If it's all working as it should "Test" should appear next to our hard-coded poi
 
 ## Add the `Type` of the asset
 
-We know know we can set the label of the point on the map with the third argument to our objective.
+We now know we can set the label of the point on the map with the third argument to our objective.
 
 Use the `Type` field on our data to write the asset's type next to it's dot on the map.
 
@@ -672,3 +672,253 @@ map.onLoad = () => {
 </Answer>
 
 The type should now appear as text beneath the dots on the map.
+
+# Set the colour of the map point
+
+Another argument we can pass into `map.addPoint()` is colour as the fourth argument. Try pass `red` as the fourth argument.
+
+<Answer>
+
+```javascript
+// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+/// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type, "red");
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+</Answer>
+
+# Set the `onClick` text
+
+The fifth, and final argument you can pass into `addPoint` is a function that let's us react to a user clicking on the point.
+
+Use the example code below to react when a user clicks on a map point.
+
+```
+/// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type, "red");
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+/// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    console.log(pushpin);
+                    return "Example Code";
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, "red", onMapItemClick);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+
+When you click on a map point, it should show "Example Code" above it, and output the map point to the console. 
+
+This is because text that you return in `onMapItemClick` is the HTML that get's put into the box above the map dot.
+
+# Add a button to map points
+
+Now we know how to show some HTML when you click on a map point, let's try make it more advanced. Replace the text with more advance HTML
+
+```javascript
+/// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    console.log(pushpin);
+                    return "Example Code";
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, "red", onMapItemClick);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```vs
+/// Import some code from NPM
+import SimpleBingMap from "simplebingmap"
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById("myMap"),
+    apiKey: "AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL"
+});
+
+function DoSomething(evt) {
+    console.log(evt);
+}
+
+window.DoSomething = DoSomething;
+
+// When the map loads
+map.onLoad = () => {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch('https://assetmapperapi.azurewebsites.net/api/assets')
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    return "<input id='test' type=button onclick='DoSomething(this)' value='test'>";                    
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, "red", onMapItemClick);
+            }
+        })
+        .catch(ex => console.error(ex));
+}
+```
+

@@ -11,13 +11,15 @@ All data is stored locally, your progress is not stored online.
 Similar to Visual Studio, other tools exist to help developers build products. 
 Visual Code is Microsoft's latest release, designed to be easier for web development.
 
-## Install and open Visual Studio Code
+## Install and open Visual Studio *Code*
 
 **Install** the [Visual Studio Code (VS-Code) IDE]( https://code.visualstudio.com/) from Microsoft and **open it**.
 
 * Once the file has downloaded, install it, accepting all defaults.
 
 ## Open an empty folder
+
+We're going to start really simply. Visual Code doesn't have a concept of project, instead it simply works on a directory level.
 
 **Create** and **open** an empty folder.
 
@@ -125,6 +127,8 @@ It's time to actually view our website. To do this we're going to use parceljs b
 
 * Run `parcel ./index.html` in the Terminal
 
+To close `parcel`, type Ctrl-C.
+
 ## Open the site in a browser
 
 If the command worked correctly, it should have outputted an address with `localhost` in it. Open up a good browser (personal preference of course) and visit the address.
@@ -134,6 +138,8 @@ If the command worked correctly, it should have outputted an address with `local
 * Go to the site http://localhost:1234 in your favourite browser.
 
 </Answer>
+
+You should see an blank screen.
 
 # Output some text
 
@@ -180,7 +186,7 @@ From this point onwards, when you're **googling** each step, you'll need to be s
 
 <Answer>
 
-Replace `index.js` with:
+Type inside the file `index.js`:
 
 ```javascript
 console.log("Hello, World!");
@@ -647,6 +653,24 @@ submitButton.onclick = DoSomething;
 ```
 
 </Answer>
+
+# View site on your phone
+
+Mobile development is important in the modern age, with most sites being built for web-development first, and desktop later.
+
+First we'll install a tool called `localtunnel`.
+
+```javascript
+npm install -g localtunnel
+```
+
+Then, open a new Terminal and run the following command
+
+```javascript
+lt --port 1234
+```
+
+This will give you a URL which you can access in your browser on your phone.
 
 # Stretch Goals
 
