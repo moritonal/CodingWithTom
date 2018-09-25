@@ -327,6 +327,8 @@ In the previous tutorial we discovered how to `post` data up to our cloud, so no
 
 [Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), download the data from `https://assetmapperapi.azurewebsites.net/api/assets`, and **output** it to the console.
 
+Azure is being slightly tricky at the moment, so confirm in a browser that this url (or your own) works before moving onward.
+
 Note, you'll have to get to grips with the idea of either Promises or async to do this. A good tutorial by Google is available [here](https://developers.google.com/web/fundamentals/primers/promises).
 
 ```javascript
@@ -940,7 +942,7 @@ First we'll install a tool called `localtunnel`.
 npm install -g localtunnel
 ```
 
-Then, open a new Terminal and run the following command
+Then, open a new Terminal and run the following command. Note that the port needs to be the same as the port as shown by parcel. 
 
 ```javascript
 lt --port 1234
@@ -953,3 +955,7 @@ This will give you a URL which you can access in your browser on your phone.
 Congratulations for completing the tutorial. Similar to our last tutorial you're now welcome to try a series of stretch goals.
 
 * Make it work on Mobile
+* Show your current GPS co-ordinates as a moving dot on the map.
+    * You'll find the `clearPoints` function on map to be helpfull here.
+* Delete a map point when clicked on.
+    * Remmember you can access the value of `current` inside of "onMapItemClick", if `onMapItemClick` is a lambda.
