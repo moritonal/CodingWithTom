@@ -507,6 +507,8 @@ The results should now be outputted one by one.
 
 Given we can now output the points to the console, use the `addPoint` function to add these points to the map.
 
+<Answer>
+
 ```javascript
 // Import some code from NPM
 import SimpleBingMap from "simplebingmap"
@@ -574,6 +576,8 @@ map.onLoad = () => {
         .catch(ex => console.error(ex));
 }
 ```
+
+</Answer>
 
 # Add text to our points
 
@@ -675,7 +679,7 @@ The type should now appear as text beneath the dots on the map.
 
 # Set the colour of the map point
 
-Another argument we can pass into `map.addPoint()` is colour as the fourth argument. Try pass `red` as the fourth argument.
+Another argument we can pass into `map.addPoint()` is colour as the fourth argument. Try pass the text "red" as the fourth argument.
 
 <Answer>
 
@@ -713,7 +717,7 @@ map.onLoad = () => {
         .catch(ex => console.error(ex));
 }
 ```vs
-/// Import some code from NPM
+// Import some code from NPM
 import SimpleBingMap from "simplebingmap"
 
 // Create a map, passing both the element and our apiKey
@@ -755,7 +759,7 @@ The fifth, and final argument you can pass into `addPoint` is a function that le
 
 Use the example code below to react when a user clicks on a map point.
 
-```
+```javascript
 /// Import some code from NPM
 import SimpleBingMap from "simplebingmap"
 
@@ -835,7 +839,7 @@ This is because text that you return in `onMapItemClick` is the HTML that get's 
 
 # Add a button to map points
 
-Now we know how to show some HTML when you click on a map point, let's try make it more advanced. Replace the text with more advance HTML
+Now we know how to show some HTML when you click on a map point, let's try make it more advanced. Replace the text with more advance HTML. This is to show you how to do something, rather than an explit objective.
 
 ```javascript
 /// Import some code from NPM
@@ -922,3 +926,30 @@ map.onLoad = () => {
 }
 ```
 
+We're giving you the code here given there's a tricky bit of logic registering the event on the `window` level. This is because the button we create in the infobox needs to be able to call the function from the window's contex.
+
+# View site on your phone
+
+Mobile development is important in the modern age, with most sites being built for web-development first, and desktop later. We're going to use a tool to quickly create a tunnel from our machine to a temporary website online.
+
+Please note, be carefull which ports you open with this tool as they will be accessible to the world.
+
+First we'll install a tool called `localtunnel`.
+
+```javascript
+npm install -g localtunnel
+```
+
+Then, open a new Terminal and run the following command
+
+```javascript
+lt --port 1234
+```
+
+This will give you a URL which you can access in your browser on your phone.
+
+# Stretch goals
+
+Congratulations for completing the tutorial. Similar to our last tutorial you're now welcome to try a series of stretch goals.
+
+* Make it work on Mobile
