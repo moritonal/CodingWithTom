@@ -16,7 +16,7 @@ import "bootswatch/dist/darkly/bootstrap.css"
 
 console.log(window.location);
 
-if (window.location.pathname.endsWith("/editor")) {
+if (!window.location.pathname.endsWith("/editor")) {
 	
 	new Vue({
 		el: '#app',
