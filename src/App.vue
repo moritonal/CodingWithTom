@@ -42,7 +42,7 @@
 <script>
 
 import Tutorial from "./Tutorial.vue"
-// import LiveTutorial from "./../tutorials/Tutorial_UploadingData.md"
+import LiveTutorial from "./../tutorials/Tutorial_DownloadData.md"
 
 export default {
   name: "App",
@@ -50,7 +50,7 @@ export default {
     return {
       state: "INIT",
       markdownUrl: null,
-      defaultUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom.Build/master/tutorials/Tutorial_UploadingData.md",
+      defaultUrl: "https://raw.githubusercontent.com/Glitch0011/CodingWithTom/master/tutorials/Tutorial_UploadingData.md",
       storedMarkdownUrl: null,
       markdown: null
     };
@@ -99,6 +99,8 @@ export default {
   },
   watch: {
     "storedMarkdownUrl": async function() {
+
+      console.log("StoredMarkdownUrl", this.storedMarkdownUrl);
 
       if (this.storedMarkdownUrl == null) {
         this.state = "INIT";

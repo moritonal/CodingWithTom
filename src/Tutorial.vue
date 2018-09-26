@@ -20,36 +20,40 @@
                 </li>
             </ul>
             <form class="form-inline m-0">
+                <button type="button" class="btn btn-primary d-none d-md-flex mx-2" v-on:click="openEditMode">Edit</button>
                 <button type="button" class="btn btn-primary d-none d-md-flex">{{tutorialName}}</button>
                 <button type="button" class="btn btn-danger ml-2" v-on:click="exitTutorial">Exit</button>
             </form>
         </nav>
     
-        <div v-if="this.markdown != null" id="tutorial">
+        <div v-if="this.cachedMarkdown != null" id="tutorial" class="paddedSides">
 
-            <div v-show="currentCleanUrl === '/'">
-                <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
-
-                <div class="d-flex justify-content-center">
-                    <div class="btn-group btn-group-justified" role="group">
-                    <button type="button" class="btn btn-primary p-2" v-on:click="NextObjective">Next</button>
-                    </div>
-                </div>
-            </div>
-
-            <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title">
-
-                <div v-if="currentCleanUrl === `/${objective.url}`">
-                    <TutorialSection v-bind="objective"></TutorialSection>
+            <div>
+                <!-- Show summary when at the root -->
+                <div v-show="currentCleanUrl === '/'">
+                    <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
 
                     <div class="d-flex justify-content-center">
                         <div class="btn-group btn-group-justified" role="group">
-                            <button type="button" class="btn btn-secondary p-3 px-4" v-on:click="PreviousObjective">Previous</button>
-                            <button type="button" class="btn btn-primary p-3 px-4" v-on:click="NextObjective" v-if="currentObjectiveIndex + 1 != totalObjectives">Next</button>
+                        <button type="button" class="btn btn-primary p-2" v-on:click="NextObjective">Next</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- Create all the objectives -->
+                <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title">
+
+                    <div v-if="currentCleanUrl === `/${objective.url}`">
+                        <TutorialSection v-bind="objective"></TutorialSection>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="btn-group btn-group-justified" role="group">
+                                <button type="button" class="btn btn-secondary p-3 px-4" v-on:click="PreviousObjective">Previous</button>
+                                <button type="button" class="btn btn-primary p-3 px-4" v-on:click="NextObjective" v-if="currentObjectiveIndex + 1 != totalObjectives">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
       </div>
   </div>
@@ -65,22 +69,26 @@ import StretchGoal from "./StretchGoal.vue"
 import TutorialSection from "./TutorialSection.vue"
 import TutorialSummary from "./TutorialSummary.vue"
 import striptags from "striptags"
+import MonicoCode from "./MonicoCode.vue"
 
 export default {
   name: "Tutorial",
   data() {
     return {
       currentUrl: window.location.pathname,
-      objectives: null,
+      objectives : null,
       cachedJsonObjectives: null,
       answersRevealed: null,
-      tutorialName: null
+      tutorialName: null,
+      editWindow: null,
+      cachedMarkdown: null
     };
   },
   props: ["markdown"],
   components:{
       TutorialSection,
-      TutorialSummary
+      TutorialSummary,
+      MonicoCode
   },
   methods: {
     NextObjective: function() {
@@ -143,32 +151,62 @@ export default {
     exitTutorial : function() {
         console.log("Exiting tutorial");
         this.$emit("exit-tutorial");
+    },
+    openEditMode : function() {
+
+        let savedMarkdownUri = localStorage.getItem("savedMarkdownUrl");
+
+        localStorage.setItem(`${savedMarkdownUri}.edited`, this.cachedMarkdown);
+
+        this.editWindow = window.open(`/editor?uri=${savedMarkdownUri}`);
     }
   },
   mounted: async function() {
-    this.updateTitle();
-    this.updateAnswersRevealed();
-    this.updateTutorialName();
 
-    console.log("Current Path", this.currentCleanUrl);
-    window.onpopstate = (evt) => {
-          this.currentUrl = window.location.pathname;
-    }
+        this.cachedMarkdown = JSON.parse(JSON.stringify(this.markdown));
 
-    document.onkeydown = (key) => {
-        if (key.code === "ArrowRight") {
-            this.NextObjective();
-        } else if (key.code === "ArrowLeft") {
-            this.PreviousObjective();
+        this.updateTitle();
+        this.updateAnswersRevealed();
+        this.updateTutorialName();
+
+        console.log("Current Path", this.currentCleanUrl);
+        window.onpopstate = (evt) => {
+            this.currentUrl = window.location.pathname;
         }
-    }
 
-    window.addEventListener("answerRevealed", this.onStorage, false);
+        document.onkeydown = (key) => {
+            if (key.code === "ArrowRight") {
+                this.NextObjective();
+            } else if (key.code === "ArrowLeft") {
+                this.PreviousObjective();
+            }
+        }
+
+        window.addEventListener("answerRevealed", this.onStorage, false);
+
+        let channel = new BroadcastChannel("EditChannel");
+
+        channel.onmessage = (evt) => {
+
+            let data = evt.data;
+
+            switch (data.command) {
+                case "update":
+                    console.log("New Markdown");
+                    this.cachedJsonObjectives = null;
+                    this.cachedMarkdown = data.newMarkdown;
+                    break;
+            }
+        }
 
   },
   watch: {
       currentUrl: function(val) {
         this.updateTitle();
+      },
+      markdown: function(val) {
+          console.log("Markdown set to ", val);
+        this.cachedMarkdown= val;
       }
   },
   computed: {
@@ -177,9 +215,11 @@ export default {
         if (this.cachedJsonObjectives != null) 
             return this.cachedJsonObjectives;
 
-        console.log("Processing markdown", this.markdown);
+        if (this.cachedMarkdown == null) {
+            return null;
+        }
 
-        let objectives = MarkdownLexor.Parse(this.markdown);
+        let objectives = MarkdownLexor.Parse(this.cachedMarkdown);
 
         if (objectives == null) {
 
@@ -212,12 +252,23 @@ export default {
         return objectives;
     },
     answersTotal: function() {
-        return (this.markdown.match(/\<\/Answer/g) || []).length
+        if (this.cachedMarkdown !== null) {
+            return (this.cachedMarkdown.match(/\<\/Answer/g) || []).length
+        } else {
+            return 0;
+        }
     },
     totalObjectives: function() {
+
+        if (this.jsonObject == null)
+            return 0;
+
         return this.jsonObject.objectives.length;
     },
     currentObjectiveIndex: function() {
+
+        if (this.jsonObject == null)
+            return 0;
 
         if (this.currentCleanUrl == "/") {
             return -1;
@@ -236,19 +287,22 @@ export default {
 <style lang="css">
 
 #tutorial {
-    margin: 0px;
+    
     padding: 20px;
 
     font-size: 110%;
     font-weight: 400;
     font-family: "Segoe UI",Arial,sans-serif;
 
-    max-width: 920px;
+    margin-top: 70px;
 
+    display: flex;
+}
+
+.paddedSides {
+    max-width: 920px;
     margin-left: auto;
     margin-right: auto;
-
-    margin-top: 70px;
 }
 
 body {
@@ -265,6 +319,11 @@ img {
 
 .my-border-bottom {    
     border-bottom: #ffffff2b 1px solid;
+}
+
+.editor {
+    width: 800px;
+    height: 100%;
 }
 
 </style>

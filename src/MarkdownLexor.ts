@@ -109,6 +109,7 @@ export default class MarkdownLexor {
         return {
             summary: summary,
             objectives: objectives,
+            markdown: obj.data,
             text: text
         }
     }

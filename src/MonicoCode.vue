@@ -1,11 +1,11 @@
 <template>
-  <div class="parent">
-  <div ref="editor_container" class="vs-dark">
-    <div id="editor" ref="editor"></div>
-    <div v-show="false" ref="code">
-      <slot/>
+  <div class="parent" v-bind:class="{fillHeight:editorHeight == 'fill'}" >
+    <div id="editor_container" ref="editor_container" class="vs-dark" v-bind:class="{fillHeight:editorHeight == 'fill'}">
+      <div id="editor" ref="editor" v-bind:class="{fillHeight:editorHeight}"></div>
+      <div v-show="false" ref="code">
+        <slot/>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -23,7 +23,16 @@ div {
   transition: filter 500ms;
 }
 
-#app {
+.parent {
+
+}
+
+.fillHeight {
+  height: 95%;
+  overflow-y: hidden;
+}
+
+#editor_container {
 
 }
 
@@ -36,7 +45,7 @@ div {
 
 #editor {
   width: 100%;
-  height: 10px;
+  /*height: 10px;*/
 }
 
 .vs-dark {

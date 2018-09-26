@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import 'babel-polyfill';
 import App from './App.vue';
+import Editor from "./Editor.vue";
 import BootstrapVue from "bootstrap-vue"
 
 //import VueRouter from "vue-router"
@@ -13,7 +14,18 @@ Vue.use(BootstrapVue);
 
 import "bootswatch/dist/darkly/bootstrap.css"
 
-new Vue({
-  el: '#app',
-  render: h => h(App)
-});
+console.log(window.location);
+
+if (window.location.pathname !== "/editor") {
+	
+	new Vue({
+		el: '#app',
+		render: h => h(App)
+	});
+
+} else {
+	new Vue({
+		el: "#app",
+		render: h => h(Editor)
+	})
+}
