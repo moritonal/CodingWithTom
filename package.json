@@ -47,7 +47,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "parcel ./index.html",
-    "build": "npm run parcel | npm run gulp | npm run deploy",
+    "build": "npm run parcel | npm run gulp",
     "parcel": "parcel build index.html --detailed-report --public-url ./",
     "gulp": "gulp",
     "deploy": "gh-pages -d dist"
