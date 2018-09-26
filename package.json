@@ -48,19 +48,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "parcel ./index.html",
     "build": "npm run parcel | npm run gulp",
-    "parcel": "parcel build index.html --detailed-report --public-url ./",
+    "parcel": "parcel build index.html --public-url ./",
     "gulp": "gulp",
     "deploy": "gh-pages -d dist"
-  },
-  "gh-pages-deploy": {
-    "staticpath": "dist",
-    "prep": [
-      "parcel",
-      "gulp"
-    ],
-    "commit": "Deploy",
-    "post": [],
-    "noprompt": false
   },
   "repository": {
     "type": "git",

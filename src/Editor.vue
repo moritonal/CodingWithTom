@@ -6,7 +6,7 @@
 		v-bind:read-only=false
 		language="markdown"
 	   	editor-height="fill"
-	   	v-on:onChange="onChange">{{markdown}}</monico-code>
+	   	v-on:change="onChange">{{markdown}}</monico-code>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import MonicoCode from "./MonicoCode.vue";
 import debounce from "debounce";
 
 export default {
-  name: "Editors",
+  name: "Editor",
   data() {
     return {
 	  markdown: null,
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
 	  onChange: function(evt, data) {
-		  console.log(data);
+		  console.log("Change detected", evt);
 		  this.channel.postMessage({
 			  command: "update",
 			  newMarkdown: data
@@ -35,9 +35,8 @@ export default {
 	  }
   },
   mounted: function() {
-    console.log("Sending post to ", window.top);
-	window.parent.postMessage("Hello", window.location.origin);
-	
+	console.log("Sending post to ", window.top);
+
 	this.onChange = debounce(this.onChange, 1000);
 
     this.channel = new BroadcastChannel("EditChannel");

@@ -121,13 +121,13 @@ export default {
 		event: 'change'
 	},
 	watch: {
-		language(newVal) {
+		language(newVal : any) {
 			if (this.editor) {
 				this.editor.setModelLanguage(this.editor.getModel(), newVal)
 			}
 		},
 
-		theme(newVal) {
+		theme(newVal : any) {
 			if (this.editor) {
 				this.editor.setTheme(newVal)
 			}
@@ -139,8 +139,8 @@ export default {
 		if (this.mode === "editor") {
 			this.value = this.$refs.code.innerText;
 		} else if (this.mode === "diff") {
-			this.left = (<HTMLElement>this.$refs.code).querySelector("#left").innerText;
-			this.right = (<HTMLElement>this.$refs.code).querySelector("#right").innerText;
+			this.left = (<HTMLElement>(<HTMLElement>this.$refs.code).querySelector("#left")).innerText;
+			this.right = (<HTMLElement>(<HTMLElement>this.$refs.code).querySelector("#right")).innerText;
 		}
 
 		this.initMonaco()
@@ -186,8 +186,9 @@ export default {
 				lines = this.editor.getModel().getLineCount() + 1;
 
 				if (!this.readOnly) {
+					console.log("Monaco Listening for Changes");
 					this.editor.model.onDidChangeContent((event) => {
-						this.$emit("onChange", event, this.editor.getValue());
+						this.$emit("change", event, this.editor.getValue());
 					});
 				}
 
