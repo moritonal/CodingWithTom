@@ -187,7 +187,7 @@ var language = exports.language = {
         include: [[/(\s*)(<)([^<>]*)(>)/, ['', 'keyword.directive.include.begin', 'string.include.identifier', { token: 'keyword.directive.include.end', next: '@pop' }]], [/(\s*)(")([^"]*)(")/, ['', 'keyword.directive.include.begin', 'string.include.identifier', { token: 'keyword.directive.include.end', next: '@pop' }]]]
     }
 };
-},{}],"..\\..\\..\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
+},{}],"node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -216,7 +216,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '3157' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '26555' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -357,5 +357,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["..\\..\\..\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js","node_modules\\monaco-editor\\esm\\vs\\basic-languages\\cpp\\cpp.js"], null)
+},{}]},{},["node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js","node_modules\\monaco-editor\\esm\\vs\\basic-languages\\cpp\\cpp.js"], null)
 //# sourceMappingURL=/cpp.c9da742c.map
