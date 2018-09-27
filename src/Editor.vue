@@ -29,7 +29,6 @@ export default {
   },
   methods: {
 	  onChange: function(evt, data) {
-		  console.log("Change detected", evt);
 		  this.channel.postMessage({
 			  command: "update",
 			  newMarkdown: data
@@ -37,20 +36,14 @@ export default {
 	  }
   },
   mounted: function() {
-	console.log("Sending post to ", window.top);
 
 	this.onChange = debounce(this.onChange, 500);
 
     this.channel = new BroadcastChannel("EditChannel");
 
-    this.channel.onmessage = evt => {
-      console.log(evt);
-	};
-	
-	let savedMarkdownUri = localStorage.getItem("savedMarkdownUrl");
+		let savedMarkdownUri = localStorage.getItem("savedMarkdownUrl");
 
-	this.markdown = localStorage.getItem(`${savedMarkdownUri}.edited`);
-		
+		this.markdown = localStorage.getItem(`${savedMarkdownUri}.edited`);
   },
   watch: {}
 };

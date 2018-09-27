@@ -99,7 +99,7 @@ export default class MarkdownLexor {
             } else {
                 let escapedText = this.escapeHtml(text);
 
-                return `<MonicoCode language='${language}'>${escapedText}</MonicoCode>`;
+                return `<MonicoCode language='${language}'><div v-pre>${escapedText}</div></MonicoCode>`;
             }
         };
         

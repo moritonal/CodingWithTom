@@ -3,7 +3,7 @@
     <div id="editor_container" ref="editor_container" class="vs-dark" v-bind:class="{fillHeight:editorHeight == 'fill'}">
       <div id="editor" ref="editor" v-bind:class="{fillHeight:editorHeight}"></div>
       <div v-show="false" ref="code">
-        <slot/>
+        <slot v-pre/>
       </div>
     </div>
   </div>

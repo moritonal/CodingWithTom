@@ -191,7 +191,6 @@ export default {
 
             switch (data.command) {
                 case "update":
-                    console.log("New Markdown");
                     this.cachedJsonObjectives = null;
                     this.cachedMarkdown = data.newMarkdown;
                     break;
