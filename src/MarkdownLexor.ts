@@ -21,6 +21,13 @@ class GroupedMarkdownLex {
     }
 }
 
+interface GroupedObj {
+    summary: string,
+    objectives: GroupedObj[],
+    markdown: string,
+    text: string
+}
+
 export default class MarkdownLexor {
 
     static SplitByHeading(depth : number, array : marked.TokensList) : Array<GroupedMarkdownLex> {
@@ -73,7 +80,7 @@ export default class MarkdownLexor {
         return p.innerHTML;
     }
 
-    static GroupsToObj(obj : GroupedMarkdownLex) {
+    static RenderMarkdown(markdown : string) : string {
 
         let renderer = new marked.Renderer();
 
@@ -95,23 +102,26 @@ export default class MarkdownLexor {
                 return `<MonicoCode language='${language}'>${escapedText}</MonicoCode>`;
             }
         };
-
-        let summary = obj.start != null ? marked.parser(obj.start, {
+        
+        return marked.parser(markdown, {
             renderer: renderer
-        }) : null;
+        });
+    }
+
+    static GroupsToObj(obj : GroupedMarkdownLex) : GroupedObj {
+
+        let summary = obj.start != null ? this.RenderMarkdown(obj.start) : null;
 
         let objectives = obj.children.length > 0 ? obj.children.map(i=>this.GroupsToObj(i)) : null;
 
-        let text = obj.children.length == 0 ? marked.parser(obj.data, {
-            renderer: renderer
-        }) : null;
+        let text = obj.children.length == 0 ? this.RenderMarkdown(obj.data) : null;
 
         return {
             summary: summary,
             objectives: objectives,
             markdown: obj.data,
             text: text
-        }
+        } as GroupedObj;
     }
 
     static Parse(text : string) {
@@ -130,11 +140,22 @@ export default class MarkdownLexor {
             
             let groups = this.SplitByHeading(1, lex);
 
-            let obj = this.GroupsToObj({
-                children: groups.filter(i=>i.start != null),
-                start: (groups.filter(i=>i.start == null)[0]).data,
-                data: []
-            });
+            console.log(groups);
+
+            if (groups.length > 0) {
+                let obj = this.GroupsToObj({
+                    children: groups.filter(i=>i.start != null),
+                    start: (groups.filter(i=>i.start == null)[0]).data,
+                    data: []
+                });
+            } else {
+                return {
+                    summary: this.RenderMarkdown(lex),
+                    objectives: [],
+                    markdown: "",
+                    text: ""
+                }
+            }
 
             return obj;
         }

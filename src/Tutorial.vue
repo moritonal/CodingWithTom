@@ -29,7 +29,7 @@
         <div v-if="this.cachedMarkdown != null" id="tutorial" class="paddedSides">
 
                 <!-- Show summary when at the root -->
-                <div v-show="currentCleanUrl === '/'">
+                <div v-show="currentCleanUrl === '/'" class="w-100">
                     <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
 
                     <div class="d-flex justify-content-center">
@@ -222,14 +222,25 @@ export default {
 
         if (objectives == null) {
 
-            // Encountered problem with this url
-            this.$emit("cannot-parse");
+            if (this.editWindow == null) {
 
-            return {
-                summary: "Error rendering",
-                objectives: [],
-                text: null
-            };
+                // Encountered problem with this url
+                this.$emit("cannot-parse");
+
+                return {
+                    summary: "Error rendering",
+                    objectives: [],
+                    text: null
+                };
+            } else {
+                console.warn("Can't parse markdown, but in edit-mode so not exiting");
+
+                return {
+                    summary: "Error rendering",
+                    objectives: [],
+                    text: null
+                };
+            }
         }
 
         for (let objective of objectives.objectives) {
