@@ -112,6 +112,10 @@ export default {
 		suggest: {
 			type: Boolean,
 			default: true
+		},
+		wordWrap: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data: function (): IData {
@@ -165,8 +169,9 @@ export default {
 				language: this.language,
 				theme: 'vs-dark',
 				readOnly: this.readOnly,
-				automaticLayout: true
-			};
+				automaticLayout: true,
+				wordWrap: this.wordWrap ? "on" : "off",
+			} as  monaco.editor.IEditorConstructionOptions;
 
 			switch (this.editorHeight) {
 				case "fill":

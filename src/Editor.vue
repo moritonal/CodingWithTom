@@ -7,7 +7,8 @@
 			language="markdown"
 	   	editor-height="fill"
 	   	v-on:change="onChange"
-			v-bind:suggest=false>{{markdown}}</monico-code>
+			v-bind:suggest=false
+			v-bind:word-wrap=true>{{markdown}}</monico-code>
   </div>
 </template>
 
