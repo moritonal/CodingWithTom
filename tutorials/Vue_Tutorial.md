@@ -381,5 +381,32 @@ new Vue({
 
 ## Output the field in your HTML
 
-Using the material and tutorials on Vue.Js available, add the correct text to the `template` field to output your new `message` field from data onto the screen.
+Using the material and tutorial on Vue.Js available, add the correct text to the `template` field to output your new `message` field from data onto the screen.
 
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    template: `
+        <div>
+            Vue wrote this!
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    template: `
+        <div>
+            {{{message}}}
+        </div>
+    `
+});
+```
+
+test

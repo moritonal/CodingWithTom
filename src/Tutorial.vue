@@ -253,9 +253,7 @@ export default {
             let summaryUrl = encodeURI(summaryWithoutTags);
             objective.url = summaryUrl;
         }
-
-        console.log("Objectives", objectives);
-
+        
         this.cachedJsonObjectives = objectives;
 
         return objectives;

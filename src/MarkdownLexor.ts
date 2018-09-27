@@ -95,7 +95,7 @@ export default class MarkdownLexor {
                 var escapedTextLeft = this.escapeHtml(left);
                 var escapedTextRight = this.escapeHtml(right);
 
-                return `<MonicoCode language='${language}' mode="diff"><div id="left">${escapedTextLeft}</div><div id="right">${escapedTextRight}</div></MonicoCode>`;
+                return `<MonicoCode language='${language}' mode="diff"><div id="left" v-pre>${escapedTextLeft}</div><div id="right" v-pre>${escapedTextRight}</div></MonicoCode>`;
             } else {
                 let escapedText = this.escapeHtml(text);
 
