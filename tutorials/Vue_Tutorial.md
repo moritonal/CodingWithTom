@@ -299,7 +299,7 @@ So far Vue has just looked like a really bloated way to write HTML. We're going 
 
 Each Vue component can have `data` fields which describe the various information it has.  
 
-This is often contextual to the component you're building, if you're producing a component that wraps a Map's functionality, it would probably store something like Lat/Long.
+This is often contextual to the component you're building, if you're producing a component that wraps a Map's functionality, it would probably store something like Lat and Long values.
 
 Add a field called `message` with a text value of whatever you like to `MyFirstComponent`'s data. There will be no output for this step, so just confirm it doesn't show an error and continue. 
 
@@ -381,7 +381,11 @@ new Vue({
 
 ## Output the field in your HTML
 
-Using the material and tutorial on Vue.Js available, add the correct text to the `template` field to output your new `message` field from data onto the screen.
+Using the material and tutorial on Vue.Js available, change `template` field to output your new `message` field from data onto the screen.
+
+It'll be temping to try use string interpolation here, but Vue.js has it's own way of doing this.
+
+<Answer>
 
 ```javascript
 // Define a component called "my-first-component"
@@ -403,10 +407,688 @@ let MyFirstComponent = Vue.component("my-first-component", {
     }),
     template: `
         <div>
-            {{{message}}}
+            {{message}}
         </div>
     `
 });
 ```
 
-test
+</Answer>
+
+Your browser should now show the value of `message`.
+
+# Working with methods
+
+Functions in Vue are declared in the component under the field `methods`. 
+
+## Add the method `DoSomething`
+
+See how the following example add's a method called `Add` to `MyFirstComponent`.
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    template: `
+        <div>
+            {{message}}
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+        </div>
+    `
+});
+```
+
+**Add** a method called `DoSomething` which simply writes something to the log.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+        </div>
+    `
+});
+```
+
+</Answer>
+
+## Call a function from the template
+
+An important concept in Vue is how anything within the double curly braces in the template is considered JS code.
+
+This means that we're able to reference fields within `data`, but it also means that with the code between the double curly braces we can call methods.
+
+Add to the template to call `Add(1, 2)` and output it's result to the browser. Don't replace `message`.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+        </div>
+    `
+});
+```
+</Answer>
+
+Some text and the number `3` should be outputted to the console.
+
+# Working with events
+
+With raw javascript, to bind an event you have to find the element with JS and then manually attach a function. Almost all framework's available (Vue included) have the functionality to greatly simplify this process.
+
+## Create an input in `MyFirstComponent`
+
+Add an `input` element with a type of `button` and `value` of "Do Something" to `MyFirstComponent` by once again updating the template.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="button" value="Do Something">
+        </div>
+    `
+});
+```
+
+</Answer>
+
+You should see a button appear on your page.
+
+## Attach an event to your button
+
+By [reading](https://vuejs.org/v2/guide/#Handling-User-Input) up on Vue's way of adding events to elements, make the button we just made call `MyFirstComponent`'s `DoSomething` method.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="button" value="Do Something">
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```
+
+</Answer>
+
+Now when you click the button you'll see data being outputted to the console.
+
+# Get input from the user
+
+Vue (and many other frameworks) are built mostly upon a concept known as *binding*. This is the idea that you can *bind* a variable to an element, and changes to it are progated throughout the framework.
+
+## Create a text input
+
+Create an `input` element with a type of `text`.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```
+
+</Answer>
+
+An empty textbox should appear on your site.
+
+## Bind the data
+
+Using your [continued reading](https://vuejs.org/v2/guide/#Handling-User-Input) of the Vue documentation, use the `v-model` attribute to link our input box to our `message` field.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" v-model="message" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```
+
+</Answer>
+
+Now, you'll note that the textbox automatically starts with the value of `message`, and then that updating the textbox causes Vue to re-render with the new value of `message`.
+
+## Access the data from `DoSomething`
+
+Just to nail home the point, update `DoSomething` to output the value of `message` when you click the button.
+
+<Answer>
+
+```javascript
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log("Hi");
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" v-model="message" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```vs
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log(this.message);
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" v-model="message" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+```
+
+</Answer>
+
+Now, when you click the button, it should show the **current** value of `message`.
+
+# Moving components into their own classes
+
+It's standard practice as a Good Dev™ to split your code up into seperate files to make it easier to understand.
+
+Four years ago this process was one of the more complicated things you could do in JS, and for a while was a limiting factor on the scalability of Web Application's use. Luckily for us, developers [agreed](https://www.ecma-international.org/ecma-262/6.0/#sec-imports) how to import code from another file. 
+
+<div class="alert alert-primary">As a small aside, the history of JS is a fasinating story complete with major players and betrayals (Microsoft and Google even working together on something). The ECMAScript 2015 (Javascript's formal name) agreement linked above was an exemplar example of the communal world of developers.</div>
+
+## Create a JS file called `MyFirstComponent.js`
+
+Simply create a file called `MyFirstComponent.js` and move the code that declares `MyFirstComponent` within `index.js` into it.
+
+<Answer>
+
+```javascript
+import Vue from "vue/dist/vue"
+
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+    data: () => ({
+        message: "Hi there!"
+    }),
+    methods: {
+        Add: function(a, b) {
+            return a + b;
+        },
+        DoSomething: function() {
+            console.log(this.message);
+        }
+    },
+    template: `
+        <div>
+            {{message}}
+            {{Add(1, 2)}}
+            <input type="text" v-model="message" />
+            <input type="button" value="Do Something" v-on:click="DoSomething">
+        </div>
+    `
+});
+
+// We define a Vue component called "my-app"
+let MyApp = Vue.component("my-app", {
+    component: [
+
+        // We tell "my-app" that it uses MyFirstComponent
+        MyFirstComponent
+    ],
+    template: `
+        <div id='app'>
+            <my-first-component/>
+        </div>
+    `
+});
+
+// Lastly, we initialise Vue, and tell it to render MyApp inside the "app" div.
+new Vue({
+    el: "#app",
+    render: h => h(MyApp)
+});
+```vs
+import Vue from "vue/dist/vue"
+
+// We define a Vue component called "my-app"
+let MyApp = Vue.component("my-app", {
+    component: [
+
+        // We tell "my-app" that it uses MyFirstComponent
+        MyFirstComponent
+    ],
+    template: `
+        <div id='app'>
+            <my-first-component/>
+        </div>
+    `
+});
+
+// Lastly, we initialise Vue, and tell it to render MyApp inside the "app" div.
+new Vue({
+    el: "#app",
+    render: h => h(MyApp)
+});
+```
+
+</Answer>
+
+This'll lead to your browser outputting the error:
+
+```
+ReferenceError: MyFirstComponent is not defined
+```
+
+## Export `MyFirstComponent` from `MyFirstComponent`.
+
+The way to access code between files in modern JS relies on two keywords `import` and `export`.
+
+Within `MyFirstComponent.js` export the component `MyFirstComponent` as the default export. Reading up the `export` keyword on MDN might help here.
+
+<Answer>
+
+```javascript
+import Vue from "vue/dist/vue"
+
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+  data: () => ({
+      message: "Hi there!"
+  }),
+  methods: {
+      Add: function(a, b) {
+          return a + b;
+      },
+      DoSomething: function() {
+          console.log(this.message);
+      }
+  },
+  template: `
+      <div>
+          {{message}}
+          {{Add(1, 2)}}
+          <input type="text" v-model="message" />
+          <input type="button" value="Do Something" v-on:click="DoSomething">
+      </div>
+  `
+});
+```vs
+import Vue from "vue/dist/vue"
+
+// Define a component called "my-first-component"
+let MyFirstComponent = Vue.component("my-first-component", {
+  data: () => ({
+      message: "Hi there!"
+  }),
+  methods: {
+      Add: function(a, b) {
+          return a + b;
+      },
+      DoSomething: function() {
+          console.log(this.message);
+      }
+  },
+  template: `
+      <div>
+          {{message}}
+          {{Add(1, 2)}}
+          <input type="text" v-model="message" />
+          <input type="button" value="Do Something" v-on:click="DoSomething">
+      </div>
+  `
+});
+
+export default MyFirstComponent;
+```
+
+</Answer>
+
+## Import `MyFirstComponent` into `index.js`
+
+You've already seen us use `import` to bring in external libraries and asset-paths. We can do the same for our own files locally.
+
+We now need to import `MyFirstComponent` back into `index.js`. Continue your reading on MDN on the `import` keyword and import the `module` with a local path of "./MyFirstComponent.js" and give it a name of `MyFirstComponent`.
+
+<Answer>
+
+```javascript
+import Vue from "vue/dist/vue"
+
+// We define a Vue component called "my-app"
+let MyApp = Vue.component("my-app", {
+    component: [
+
+        // We tell "my-app" that it uses MyFirstComponent
+        MyFirstComponent
+    ],
+    template: `
+        <div id='app'>
+            <my-first-component/>
+        </div>
+    `
+});
+
+// Lastly, we initialise Vue, and tell it to render MyApp inside the "app" div.
+new Vue({
+    el: "#app",
+    render: h => h(MyApp)
+});
+```vs
+import Vue from "vue/dist/vue"
+import MyFirstComponent from "./MyFirstComponent.js"
+
+// We define a Vue component called "my-app"
+let MyApp = Vue.component("my-app", {
+    component: [
+
+        // We tell "my-app" that it uses MyFirstComponent
+        MyFirstComponent
+    ],
+    template: `
+        <div id='app'>
+            <my-first-component/>
+        </div>
+    `
+});
+
+// Lastly, we initialise Vue, and tell it to render MyApp inside the "app" div.
+new Vue({
+    el: "#app",
+    render: h => h(MyApp)
+});
+```
+
+</Answer>
+
+If all works as before, you should see your website return to as it was before, but now with your code split across multiple files.
+
+# Last notes
+
+Often as I'd wander around you'd tell me you wanted to do something better, but didn't know how. 
+
+The point of this and the previous tutorials was to try convince you that it wasn't a matter of not knowing **how** to do something, you just didn't know **what** to Google.
+
+Computer Development as a whole is moving at an absurd speed, with Web Development, AI and AR at the fore-front. To stay up to date requires reading [blogs](https://googleprojectzero.blogspot.com/) and [sites](https://news.ycombinator.com/), following [things](https://twitter.com/getbootstrap?lang=en) on media and [attending events](https://mozillafestival.org/).
+
+# Stretch goals
+
+Congratulations for finishing the objectives. This tutorial was designed to explain the fundermentals of Vue and show how a framework can trivialise major complexities.
+
+## Easy
+
+* Add another component
+* Use a button to toggle whether an element is shown using `v-if`
+* Output to the console [as a component start's up](https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks)
+* Add a sub-component to `MyFirstComponent`
+
+## Medium
+
+* Render a list of elements based off an array using `v-for`
+* Bring the Uploader's logic into the Vue project.
+
+## Hard
+
+* Bring the Downloader's logic into the Vue project
+* Host your site on the internet without using a tunnel or paying for it
+    * Something like [this](https://zeit.co) or GitHub might help.

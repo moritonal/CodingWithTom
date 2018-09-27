@@ -140,8 +140,6 @@ export default class MarkdownLexor {
             
             let groups = this.SplitByHeading(1, lex);
 
-            console.log(groups);
-
             if (groups.length > 0) {
                 let obj = this.GroupsToObj({
                     children: groups.filter(i=>i.start != null),
