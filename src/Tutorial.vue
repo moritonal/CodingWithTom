@@ -156,7 +156,8 @@ export default {
 
         localStorage.setItem(`${savedMarkdownUri}.edited`, this.cachedMarkdown);
 
-        this.editWindow = window.open(`./editor?uri=${savedMarkdownUri}`);
+        this.editWindow = window.open(`./editor?uri=${savedMarkdownUri}`, "_blank", "location=no,width=630,height=820,scrollbar=no");
+        return false;
     }
   },
   mounted: async function() {

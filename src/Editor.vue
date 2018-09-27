@@ -38,7 +38,7 @@ export default {
   mounted: function() {
 	console.log("Sending post to ", window.top);
 
-	this.onChange = debounce(this.onChange, 1000);
+	this.onChange = debounce(this.onChange, 500);
 
     this.channel = new BroadcastChannel("EditChannel");
 
