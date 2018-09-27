@@ -50,7 +50,8 @@
     "build": "npm run parcel | npm run gulp",
     "parcel": "parcel build index.html --public-url ./",
     "gulp": "gulp",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "publish": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",

@@ -28,7 +28,6 @@
     
         <div v-if="this.cachedMarkdown != null" id="tutorial" class="paddedSides">
 
-            <div>
                 <!-- Show summary when at the root -->
                 <div v-show="currentCleanUrl === '/'">
                     <TutorialSummary v-bind:text="this.jsonObject.summary"></TutorialSummary>
@@ -41,9 +40,9 @@
                 </div>
 
                 <!-- Create all the objectives -->
-                <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title">
+                <div v-for="objective in this.jsonObject.objectives" v-bind:key="objective.title" class="w-100" v-if="currentCleanUrl === `/${objective.url}`">
 
-                    <div v-if="currentCleanUrl === `/${objective.url}`">
+                    <div >
                         <TutorialSection v-bind="objective"></TutorialSection>
 
                         <div class="d-flex justify-content-center">
@@ -53,7 +52,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
       </div>
   </div>
@@ -301,6 +299,7 @@ export default {
 
 .paddedSides {
     max-width: 920px;
+    width:100%;
     margin-left: auto;
     margin-right: auto;
 }

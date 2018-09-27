@@ -108,6 +108,10 @@ export default {
 		readOnly: {
 			type: Boolean,
 			default: true
+		},
+		suggest: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data: function (): IData {
@@ -169,10 +173,14 @@ export default {
 					break;
 				case "content":
 					options.scrollBeyondLastLine = false;
-					options.scrollbar ={
+					options.scrollbar = {
 						vertical: "hidden"
 					} as monaco.editor.IEditorScrollbarOptions;
 					break;
+			}
+
+			if (!this.suggest) {
+				options.quickSuggestions = false
 			}
 
 			if (this.mode === "editor") {
@@ -210,6 +218,16 @@ export default {
 
 				lines = maxLines + 1;
 			}
+
+			var KM = monaco.KeyMod;
+			var KC = monaco.KeyCode;
+
+			this.editor.addCommand(KM.CtrlCmd | KC.KEY_S, () => {
+				console.log("Save");
+				this.$emit("save");
+				return false;
+			});
+
 
 			switch (this.editorHeight) {
 				case "fill":

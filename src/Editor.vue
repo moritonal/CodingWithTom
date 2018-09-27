@@ -2,11 +2,12 @@
 
   <div id="app">
 	  <monico-code
-		v-if="markdown != null" 
-		v-bind:read-only=false
-		language="markdown"
+			v-if="markdown != null" 
+			v-bind:read-only=false
+			language="markdown"
 	   	editor-height="fill"
-	   	v-on:change="onChange">{{markdown}}</monico-code>
+	   	v-on:change="onChange"
+			v-bind:suggest=false>{{markdown}}</monico-code>
   </div>
 </template>
 
