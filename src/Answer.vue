@@ -4,7 +4,7 @@
       <slot />
     </div>
     <transition name="sweep" duration="500">
-      <div v-bind:class="{overlay : true}" v-show="this.storedBlurred">
+      <div v-bind:class="{overlay : true, 'edge-blur' : isEdge}" v-show="this.storedBlurred">
         <span class="text">Reveal</span>
       </div>
     </transition>
@@ -14,10 +14,28 @@
 <script lang="ts">
 
 import marked from "marked"
+import UAParser from "ua-parser-js"
+
+function stringToUint(string) {
+    var string = btoa(unescape(encodeURIComponent(string))),
+        charList = string.split(''),
+        uintArray = [];
+    for (var i = 0; i < charList.length; i++) {
+        uintArray.push(charList[i].charCodeAt(0));
+    }
+    return new Uint8Array(uintArray);
+}
 
 async function StringToKey(key : string) : Promise<string> {
 
-  var buffer = new TextEncoder().encode(key);
+  let buffer;
+
+  if (new UAParser().getResult().browser.name != "Edge") {
+    buffer = new TextEncoder().encode(key);
+  } else {
+    buffer = stringToUint(key);
+  }
+
   let hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   let hex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
@@ -84,8 +102,10 @@ export default {
     }
   },
   computed: {
-
-}
+    isEdge: function() {
+      return new UAParser().getResult().browser.name == "Edge";
+    }
+  }
 };
 
 </script>
@@ -164,6 +184,10 @@ export default {
   user-select: none;
   -moz-user-select: none;
   cursor: pointer;
+}
+
+.edge-blur {
+  background: gray;
 }
 
 </style>
