@@ -555,7 +555,7 @@ let MyFirstComponent = Vue.component("my-first-component", {
 ```
 </Answer>
 
-Some text and the number `3` should be outputted to the console.
+Some text and the number `3` should be outputted to the browser.
 
 # Working with events
 

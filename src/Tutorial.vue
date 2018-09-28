@@ -162,41 +162,47 @@ export default {
   },
   mounted: async function() {
 
-        this.cachedMarkdown = JSON.parse(JSON.stringify(this.markdown));
+    this.cachedMarkdown = JSON.parse(JSON.stringify(this.markdown));
 
-        this.updateTitle();
-        this.updateAnswersRevealed();
-        this.updateTutorialName();
+    this.updateTitle();
+    this.updateAnswersRevealed();
+    this.updateTutorialName();
 
-        console.log("Current Path", this.currentCleanUrl);
-        window.onpopstate = (evt) => {
-            this.currentUrl = window.location.pathname;
+    console.log("Current Path", this.currentCleanUrl);
+    window.onpopstate = (evt) => {
+        this.currentUrl = window.location.pathname;
+    }
+
+    document.onkeydown = (key) => {
+        if (key.code === "ArrowRight") {
+            this.NextObjective();
+        } else if (key.code === "ArrowLeft") {
+            this.PreviousObjective();
         }
+    }
 
-        document.onkeydown = (key) => {
-            if (key.code === "ArrowRight") {
-                this.NextObjective();
-            } else if (key.code === "ArrowLeft") {
-                this.PreviousObjective();
+    window.addEventListener("answerRevealed", this.onStorage, false);
+
+    try {
+        if (BroadcastChannel !== undefined) {
+            let channel = new BroadcastChannel("EditChannel");
+
+            channel.onmessage = (evt) => {
+
+                let data = evt.data;
+
+                switch (data.command) {
+                    case "update":
+                        this.cachedJsonObjectives = null;
+                        this.cachedMarkdown = data.newMarkdown;
+                        break;
+                }
             }
         }
-
-        window.addEventListener("answerRevealed", this.onStorage, false);
-
-        let channel = new BroadcastChannel("EditChannel");
-
-        channel.onmessage = (evt) => {
-
-            let data = evt.data;
-
-            switch (data.command) {
-                case "update":
-                    this.cachedJsonObjectives = null;
-                    this.cachedMarkdown = data.newMarkdown;
-                    break;
-            }
-        }
-
+    }
+    catch {
+        
+    }
   },
   watch: {
       currentUrl: function(val) {
