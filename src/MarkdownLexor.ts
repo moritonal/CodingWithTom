@@ -139,7 +139,7 @@ export default class MarkdownLexor {
             let lex : marked.TokensList = lexer.lex(text);
             
             let groups = this.SplitByHeading(1, lex);
-
+ 
             if (groups.length > 0) {
                 let obj = this.GroupsToObj({
                     children: groups.filter(i=>i.start != null),
