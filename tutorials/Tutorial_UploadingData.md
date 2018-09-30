@@ -327,7 +327,7 @@ These let you move step through your code slowly and investigate various things.
 
 Now we need to tell the browser to call our function when they click the button. The way we're going to do it is with the following line at the end of `index.js`.
 
-This isn't however the recommended way of doing it, but it works here because of the carefull way we're set up our project so far. Consider it a stretch goal if you can explain why this is bad, and why we're able to do it here.
+This isn't however the recommended way of doing it, but it works here because of the careful way we're set up our project so far. Consider it a stretch goal if you can explain why this is bad, and why we're able to do it here.
 
 ```javascript
 // Define a function called DoSomething
@@ -364,7 +364,7 @@ And then finally, we set the button's onclick event to equal our function. Now, 
 
 # Learn about `console.log`
 
-`console.log` is the secret weapon of Web Development. Mostly based on just how much helpfull information it can output.
+`console.log` is the secret weapon of Web Development. Mostly based on just how much helpful information it can output.
 
 Try writing the variable `submitButton` to the console, and watch what happens.
 
@@ -396,7 +396,7 @@ console.log(submitButton)
 console.log("Add", 1 + 2)
 ```
 
-In the console you should see the results. We've used a subtle trick here, `console.log` accepts multiple parameters and will neatly split them up, this can be very helpfull when debugging.
+In the console you should see the results. We've used a subtle trick here, `console.log` accepts multiple parameters and will neatly split them up, this can be very helpful when debugging.
 
 Liberal use of `console.log` to watch the flow of your code and view the data is invaluable when it comes to solving problem. Undo these changes and get back to it outputting when you click the button.
 
@@ -688,7 +688,7 @@ Congrats, you've completed the core exercise and finished this tutorial. From he
 ## Medium
 
 * Convert the scripts to `Typescript`
-    * Typescript is a language like Javascript, but comes with a few helpfull features. Read up on `parceljs and typescript` and see if you can convert `index.js` to use Typescript.
+    * Typescript is a language like Javascript, but comes with a few helpful features. Read up on `parceljs and typescript` and see if you can convert `index.js` to use Typescript.
 * Load an image onto the page
 * Fix a mistake in this tutorial
 
