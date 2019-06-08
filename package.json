@@ -56,7 +56,7 @@
     "build": "npm-run-all build:*",
     "build:parcel": "cross-env NODE_ENV=production parcel build index.html",
     "build:gulp": "gulp",
-    "deploy":"npm-run-all depoy:*",
+    "deploy":"npm-run-all deploy:*",
     "deploy:bump": "npm version minor",
     "deploy:build": "npm run build",
     "deploy:deploy": "gh-pages -d dist"
