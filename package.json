@@ -54,7 +54,7 @@
   "scripts": {
     "serve": "node parcel.js",
     "build": "npm-run-all build:*",
-    "build:parcel": "cross-env NODE_ENV=production parcel build index.html",
+    "build:parcel": "cross-env NODE_ENV=production parcel build index.html --public-url . --no-source-maps",
     "build:gulp": "gulp",
     "deploy": "npm-run-all deploy:*",
     "deploy:bump": "npm version minor",
