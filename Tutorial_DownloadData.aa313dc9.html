@@ -1,0 +1,655 @@
+<p>In this tutorial we&#39;ll create a site that let&#39;s us download data from our API, and draw it on a map. </p><p>Complete this tutorial after completing the Uploader Tutorial.</p><h1 id="create-the-site">Create the site</h1><p>Similar to our previous demo we need to setup a blank project with parcel.</p><h2 id="open-an-empty-folder">Open an empty folder</h2><p><strong>Create</strong> and <strong>open</strong> an empty folder.</p><ul>
+<li>Click &quot;Open folder...&quot;</li>
+<li>Create a directory</li>
+<li>Then select <code>Open it</code></li>
+</ul><h2 id="open-vs-codes-in-built-terminal">Open VS-Code&#39;s in-built Terminal</h2><p><strong>Terminal</strong>s are where you can input commands for the system to run. Current modern Web Development uses many tools to product websites, so it&#39;s easier to have a terminal always open to command from. <strong>Open</strong> the in-build terminal now.</p><Answer> <ul>
+<li>In the menu at the top, click View, then select Terminal.s</li>
+</ul>
+</Answer><h1 id="setup-the-build-pipeline">Setup the build pipeline</h1><h2 id="install-npm">Install NPM</h2><p>NPM (otherwise known as the Node Package Manager) is another tool which allows you to easily download and install tools and libraries of code with one line commands. </p><p><strong>Install</strong> NPM and Node.js on your machine.</p><Answer> <p>Follow the tutorial <a href="https://www.npmjs.com/get-npm">here</a>.</p>
+</Answer><h2 id="install-parceljss-bundler-via-npm">Install ParcelJs&#39;s Bundler via NPM</h2><p>ParcelJs is one of the aforementioned tools we&#39;ll be using. It takes the code you write, adds a collection of useful functionality for you as a developer, then hosts a server locally for you to view in a browser.</p><p>It&#39;s highly advised here to <strong>google</strong> &quot;install parceljs&quot; and read their &quot;Getting Started&quot; page for help.</p><Answer> <ul>
+<li>Run <code>npm install -g parcel-bundler</code> in the Terminal.</li>
+</ul>
+</Answer><h2 id="initialise-npm-project">Initialise npm project</h2><p>To keep track of the libraries of code (known as packages in NPM), we need to create a project. Unlike Visual Studio which does this via a fancy GUI, we use another command from npm to do this.</p><p>Create a blank project, and accept all the defaults. As before <strong>google</strong> is the answer.</p><Answer> <ul>
+<li>Run <code>npm init -y</code> in the Terminal</li>
+</ul>
+</Answer><h2 id="create-new-file-called-indexjs">Create new file called <code>index.js</code></h2><p>Here we&#39;re going to create our first script file. These files run code once they&#39;re loaded in the user&#39;s browser. We&#39;re creating a <code>.js</code> file, meaning we&#39;ll be writing in JavaScript (JS).</p><p>Our script is going to do the work of uploading data to the server and responding to user-input, but for now we&#39;ll leave it empty.</p><Answer> <ul>
+<li>Right click on the left-hand panel and select &quot;New File&quot;</li>
+<li>Type <code>index.js</code></li>
+</ul>
+</Answer><h2 id="create-new-file-called-indexhtml">Create new file called <code>index.html</code></h2><p>While the name doesn&#39;t matter exactly, it&#39;s good convention to use something like &quot;index&quot; for the starting point of the site.</p><p>What does matter is that the ending is <code>.html</code> (Hyper-Text Markup Language) given this tells parceljs that this file describes how the website should <strong>look</strong>.</p><Answer> <ul>
+<li>Right click on the left-hand panel and select &quot;New File&quot;</li>
+<li>Type <code>index.html</code></li>
+</ul>
+</Answer><h2 id="setup-starting-code-in-indexhtml">Setup starting code in <code>index.html</code></h2><p>Type into <code>index.html</code>. </p><p>HTML is written in XML. XML uses greater-than and less-than characters to define <code>tags</code>. Tags must be opened with something like <code>&lt;example&gt;</code> and closed with the same name prefixed with a forward-slash <code>&lt;/example&gt;</code>.</p><pre><code class="language-html">&lt;html&gt;
+    &lt;body&gt;
+        &lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>The tags here work as follows:</p><ul>
+<li><code>&lt;html&gt;</code> means it&#39;s the start of an HTML file. This is more a matter of legacy than anything (HTML is very old), but it&#39;s important to have.</li>
+<li><code>&lt;body&gt;</code> is where the visible parts of the site start. On larger websites there are a few things before the <code>&lt;body&gt;</code> that have other functionality.</li>
+<li><code>&lt;script&gt;</code> is mostly to cheer up parceljs given it requires it. It means the your browser will include that script when you view the website.</li>
+</ul><h2 id="run-parceljs">Run ParcelJs</h2><p>It&#39;s time to actually view our website. To do this we&#39;re going to use parceljs by running the command in our Terminal. </p><ul>
+<li>Run <code>parcel ./index.html</code> in the Terminal</li>
+</ul><h2 id="open-the-site-in-a-browser">Open the site in a browser</h2><p>If the command worked correctly, it should have outputted an address with <code>localhost</code> in it. Open up a good browser (personal preference of course) and visit the address.</p><Answer> <ul>
+<li>Go to the site <a href="http://localhost:1234">http://localhost:1234</a> in your favourite browser.</li>
+</ul>
+</Answer><h1 id="setup-the-html-for-the-map">Setup the html for the map</h1><p>We&#39;re going to need to tell the website where to put the map on our webpage.</p><p>We can do this by placing a <code>&lt;div&gt;</code> element above our script in <code>index.html</code>.</p><pre><code class="language-html">&lt;html&gt;
+    &lt;body&gt;
+        &lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+```vs
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;myMap&quot;&gt;&lt;/div&gt;
+        &lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p>A <code>&lt;div&gt;</code> element is used for spacing, telling the browser to put anything inside of this on it&#39;s own line. We&#39;re going to tell our Map library to use this as a container for our map.</p><h1 id="load-the-map">Load the map</h1><p>Bing maps (yes, Bing) is an easy to use library for drawing a map in our site. We&#39;ll be using a library called <code>simplebingmaps</code> to create and control the map.</p><p>Replace <code>index.js</code> with:</p><pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.5032, -0.1223)
+}</code></pre><p>The results should look like this:</p><p><img src="firstmap.84fa31cf.png" alt="Input"></p><h1 id="controlling-the-map">Controlling the map</h1><h2 id="move-the-dot">Move the dot</h2><p>You&#39;ll see that we&#39;ve hard-coded the lat-long for our dot into the code. <strong>Move</strong> the dot from <strong>London Waterloo</strong> to <strong>14 Pier Walk</strong>.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.5032, -0.1223)
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+}</code></pre>
+</Answer><h2 id="center-the-map">Center the map</h2><p>Similar to the <code>map.addPoint</code> function, map has a <code>map.setCenter</code> function with the same parameters (where parameters are the things you pass into a function between the <code>(</code> and <code>)</code>). Use this function, inside the <code>onLoad</code> function, to center the map on <strong>14 Pier Walk</strong>&#39;s coordinates.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+}</code></pre>
+</Answer><p>Now the map should be centered on Pier Walk.</p><h2 id="set-the-zoom">Set the zoom</h2><p>The third ability our API gives us is the <code>setZoom</code> function. This lets us control how zoomed in we are on the map.</p><p>Use <code>setZoom</code>, which takes a single number as a parameter to zoom in on Pier Walk.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+}</code></pre>
+</Answer><h1 id="fetch-the-data">Fetch the data</h1><p>Now we can control the map, we need to <code>get</code> the data from our API.</p><p>In the previous tutorial we discovered how to <code>post</code> data up to our cloud, so now we&#39;ll do the inverse to <code>get</code> data from it.</p><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">Using Fetch</a>, download the data from <code>https://assetmapperapi.azurewebsites.net/api/assets</code>, and <strong>output</strong> it to the console.</p><p>Azure is being slightly tricky at the moment, so confirm in a browser that this url (or your own) works before moving onward.</p><p>Note, you&#39;ll have to get to grips with the idea of either Promises or async to do this. A good tutorial by Google is available <a href="https://developers.google.com/web/fundamentals/primers/promises">here</a>.</p><pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            console.log(json);
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre><h1 id="learning-about-arrays">Learning about arrays</h1><p>Now we have the data being outputted into our console, we should take an aside to talk about iterating over loops in Javascript.</p><p>Array&#39;s are created with the following syntax. This would be an array of the numbers <code>1</code>, <code>2</code> and <code>3</code>.</p><pre><code class="language-javascript">let array = [1, 2, 3];</code></pre><p>Javascript gives us plenty of ways of iterating over an array. First, there&#39;s the simple classic <code>for</code> loop.</p><pre><code class="language-javascript">let array = [1, 2, 3];
+
+for (let i = 0; i &lt; array.length; i++) {
+
+    let current = array[i];
+
+    console.log(current);
+}</code></pre><p>I won&#39;t add to the thousands of tutorials explaining how that works. Next, the <code>map</code> function. The <code>map</code> function executes over every item in the array.</p><pre><code class="language-javascript">let array = [1, 2, 3];
+
+array.forEach(current =&gt; {
+    console.log(current);
+})</code></pre><p>And finally, we have the new <code>for</code> statement.</p><pre><code class="language-javascript">let array = [1, 2, 3];
+
+for (let current of array) {
+    console.log(current);
+}</code></pre><h1 id="iterate-over-the-returned-map-points">Iterate over the returned map points</h1><p>Using this understanding of iterating over arrays, and knowing that the response variable <code>json</code> is an array, output each point&#39;s <code>Latitude</code> value to the console.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            console.log(json);
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                console.log(current.Latitude);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre>
+</Answer><p>The results should now be outputted one by one.</p><h1 id="draw-the-map-points">Draw the map points</h1><p>Given we can now output the points to the console, use the <code>addPoint</code> function to add these points to the map.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                console.log(current.Latitude);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre>
+</Answer><h1 id="add-text-to-our-points">Add text to our points</h1><h2 id="add-some-static-text">Add some static text</h2><p>In Javascript, functions can have multiple arguments passed into it. The <code>addPoint</code> takes a third argument which sets it&#39;s label.</p><p>Try test it now with the existing <code>addPoint</code> call.</p><pre><code class="language-javascript">// Add a point to it
+map.addPoint(51.501030, 0.006361);
+```vs
+// Add a point to it
+map.addPoint(51.501030, 0.006361, &quot;Test&quot;);</code></pre><p>If it&#39;s all working as it should &quot;Test&quot; should appear next to our hard-coded point. </p><h2 id="add-the-type-of-the-asset">Add the <code>Type</code> of the asset</h2><p>We now know we can set the label of the point on the map with the third argument to our objective.</p><p>Use the <code>Type</code> field on our data to write the asset&#39;s type next to it&#39;s dot on the map.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre>
+</Answer><p>The type should now appear as text beneath the dots on the map.</p><h1 id="set-the-colour-of-the-map-point">Set the colour of the map point</h1><p>Another argument we can pass into <code>map.addPoint()</code> is colour as the fourth argument. Try pass the text &quot;red&quot; as the fourth argument.</p><Answer> <pre><code class="language-javascript">// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type, &quot;red&quot;);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre>
+</Answer><h1 id="set-the-onclick-text">Set the <code>onClick</code> text</h1><p>The fifth, and final argument you can pass into <code>addPoint</code> is a function that let&#39;s us react to a user clicking on the point.</p><p>Use the example code below to react when a user clicks on a map point.</p><pre><code class="language-javascript">/// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+                map.addPoint(current.Latitude, current.Longitude, current.Type, &quot;red&quot;);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+/// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    console.log(pushpin);
+                    return &quot;Example Code&quot;;
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, &quot;red&quot;, onMapItemClick);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre><p>When you click on a map point, it should show &quot;Example Code&quot; above it, and output the map point to the console. </p><p>This is because text that you return in <code>onMapItemClick</code> is the HTML that get&#39;s put into the box above the map dot.</p><h1 id="add-a-button-to-map-points">Add a button to map points</h1><p>Now we know how to show some HTML when you click on a map point, let&#39;s try make it more advanced. Replace the text with more advance HTML. This is to show you how to do something, rather than an explit objective.</p><pre><code class="language-javascript">/// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    console.log(pushpin);
+                    return &quot;Example Code&quot;;
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, &quot;red&quot;, onMapItemClick);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}
+```vs
+/// Import some code from NPM
+import SimpleBingMap from &quot;simplebingmap&quot;
+
+// Create a map, passing both the element and our apiKey
+let map = new SimpleBingMap({
+    element: document.getElementById(&quot;myMap&quot;),
+    apiKey: &quot;AgxkFoRXJFU3KMrXKZ6QreNbHaiYkTbU9oIOTAD2sooe6z6PXaf4jt9LPyeAaWFL&quot;
+});
+
+function DoSomething(evt) {
+    console.log(evt);
+}
+
+window.DoSomething = DoSomething;
+
+// When the map loads
+map.onLoad = () =&gt; {
+
+    // Add a point to it
+    map.addPoint(51.501030, 0.006361)
+
+    // Center the map
+    map.setCenter(51.501030, 0.006361);
+
+    // Zoom the map
+    map.setZoom(16);
+
+    fetch(&#39;https://assetmapperapi.azurewebsites.net/api/assets&#39;)
+        .then(response =&gt; {
+            return response.json();
+        })
+        .then(json =&gt; {
+            for (let current of json) {
+
+                function onMapItemClick(pushpin) {
+                    return &quot;&lt;input id=&#39;test&#39; type=button onclick=&#39;DoSomething(this)&#39; value=&#39;test&#39;&gt;&quot;;                    
+                }
+
+                map.addPoint(current.Latitude, current.Longitude, current.Type, &quot;red&quot;, onMapItemClick);
+            }
+        })
+        .catch(ex =&gt; console.error(ex));
+}</code></pre><p>We&#39;re giving you the code here given there&#39;s a tricky bit of logic registering the event on the <code>window</code> level. This is because the button we create in the infobox needs to be able to call the function from the window&#39;s contex.</p><h1 id="view-site-on-your-phone">View site on your phone</h1><p>Mobile development is important in the modern age, with most sites being built for web-development first, and desktop later. We&#39;re going to use a tool to quickly create a tunnel from our machine to a temporary website online.</p><p>Please note, be carefull which ports you open with this tool as they will be accessible to the world.</p><p>First we&#39;ll install a tool called <code>localtunnel</code>.</p><pre><code class="language-javascript">npm install -g localtunnel</code></pre><p>Then, open a new Terminal and run the following command. Note that the port needs to be the same as the port as shown by parcel. </p><pre><code class="language-javascript">lt --port 1234</code></pre><p>This will give you a URL which you can access in your browser on your phone.</p><h1 id="stretch-goals">Stretch goals</h1><p>Congratulations for completing the tutorial. Similar to our last tutorial you&#39;re now welcome to try a series of stretch goals.</p><ul>
+<li>Make it work on Mobile</li>
+<li>Show your current GPS co-ordinates as a moving dot on the map.<ul>
+<li>You&#39;ll find the <code>clearPoints</code> function on map to be helpfull here.</li>
+</ul>
+</li>
+<li>Delete a map point when clicked on.<ul>
+<li>Remmember you can access the value of <code>current</code> inside of &quot;onMapItemClick&quot;, if <code>onMapItemClick</code> is a lambda.</li>
+</ul>
+</li>
+</ul>
