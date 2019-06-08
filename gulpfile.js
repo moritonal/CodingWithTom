@@ -23,11 +23,23 @@ gulp.task("noNotFound", () => {
     .pipe(gulp.dest('./dist/'));
 })
 
-gulp.task("noJekyll", () => {
+gulp.task("noJekyll", async () => {
+
     const path = require("path");
     const fs = require("fs");
 
-    fs.writeFileSync(path.join("./dist", ".nojekyll"), "")
+    const route = path.join("./dist", ".nojekyll");
+
+    fs.writeFileSync(route, "");
+
+    new Promise(res => fs.writeFile(route, "", () => {
+        res();
+    }));
 })
 
-gulp.task("default", gulp.parallel("copy-pics", "noNotFound", "noJekyll", "copy-workers"));
+gulp.task("default", 
+    gulp.parallel(
+        "copy-pics", 
+        "noNotFound", 
+        "noJekyll", 
+        "copy-workers"));
