@@ -49,14 +49,14 @@
   },
   "name": "CodingWithTom",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "serve": "node parcel.js",
     "build": "npm-run-all build:*",
     "build:parcel": "cross-env NODE_ENV=production parcel build index.html",
     "build:gulp": "gulp",
-    "deploy":"npm-run-all deploy:*",
+    "deploy": "npm-run-all deploy:*",
     "deploy:bump": "npm version minor",
     "deploy:build": "npm run build",
     "deploy:deploy": "gh-pages -d dist"
