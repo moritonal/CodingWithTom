@@ -39,7 +39,7 @@
     "style-loader": "^0.23.1",
     "text-encoder-lite": "^1.0.1",
     "tutorials": "^1.0.0",
-    "ua-parser-js": "^0.7.19",
+    "ua-parser-js": "^0.7.24",
     "underscore": "^1.9.1",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
